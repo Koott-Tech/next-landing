@@ -1,8 +1,28 @@
 'use client';
 
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 const ClientReview = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const reviews = [
     {
       name: "Sarah Johnson",
@@ -64,6 +84,7 @@ const ClientReview = () => {
 
   return (
     <section
+      ref={sectionRef}
       style={{
         width: "100vw",
         minHeight: "100vh",
@@ -179,7 +200,7 @@ const ClientReview = () => {
                 }}
               >
                 {/* Background - Video for odd indices, Image for even indices */}
-                {index % 2 === 0 ? (
+                {index % 2 === 0 && isVisible ? (
                   <video
                     src={"/" + review.video}
                     style={{
@@ -195,6 +216,7 @@ const ClientReview = () => {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                   />
                 ) : (
                   <img
@@ -209,6 +231,7 @@ const ClientReview = () => {
                       zIndex: 1
                     }}
                     alt={review.name}
+                    loading="lazy"
                   />
                 )}
                 
@@ -303,7 +326,7 @@ const ClientReview = () => {
                 }}
               >
                 {/* Background - Video for odd indices, Image for even indices */}
-                {index % 2 === 0 ? (
+                {index % 2 === 0 && isVisible ? (
                   <video
                     src={"/" + review.video}
                     style={{
@@ -319,6 +342,7 @@ const ClientReview = () => {
                     loop
                     muted
                     playsInline
+                    preload="metadata"
                   />
                 ) : (
                   <img
@@ -333,6 +357,7 @@ const ClientReview = () => {
                       zIndex: 1
                     }}
                     alt={review.name}
+                    loading="lazy"
                   />
                 )}
                 

@@ -22,14 +22,15 @@ const HowItWorks = () => {
                 key={index}
                 className="w-48 h-64 rounded-lg overflow-hidden shadow-lg border-2 border-green-300 relative group cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl bg-white"
               >
-                <video
-                  src={`/${guide.video}`}
-                  className="w-full h-full object-cover"
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
+                                 <video
+                   src={`/${guide.video}`}
+                   className="w-full h-full object-cover"
+                   autoPlay
+                   loop
+                   muted
+                   playsInline
+                   preload="metadata"
+                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                   <h3 className="font-semibold text-lg">{guide.name}</h3>
@@ -121,14 +122,15 @@ const HowItWorks = () => {
           <div className="flex gap-6 justify-center">
             {/* Therapist Video Card */}
             <div className="w-64 h-48 rounded-lg overflow-hidden shadow-lg border-2 border-blue-200 relative">
-              <video
-                src="/intro_4.mp4"
-                className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
+                           <video
+               src="/intro_4.mp4"
+               className="w-full h-full object-cover"
+               autoPlay
+               loop
+               muted
+               playsInline
+               preload="metadata"
+             />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                 <h3 className="font-semibold">Dr. Sarah</h3>
@@ -138,14 +140,15 @@ const HowItWorks = () => {
             
             {/* Patient Video Card */}
             <div className="w-64 h-48 rounded-lg overflow-hidden shadow-lg border-2 border-green-200 relative">
-              <video
-                src="/intro_5.mp4"
-                className="w-full h-full object-cover"
-                autoPlay
-                loop
-                muted
-                playsInline
-              />
+                           <video
+               src="/intro_5.mp4"
+               className="w-full h-full object-cover"
+               autoPlay
+               loop
+               muted
+               playsInline
+               preload="metadata"
+             />
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                 <h3 className="font-semibold">You</h3>

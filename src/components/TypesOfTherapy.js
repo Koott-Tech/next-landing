@@ -14,6 +14,7 @@ const TypesOfTherapy = () => {
   useEffect(() => {
     let tl;
     let isAnimating = false;
+    let animationId;
     
     function playSequence() {
       if (isAnimating) return;
@@ -22,52 +23,83 @@ const TypesOfTherapy = () => {
       // Kill any existing timeline
       if (tl) tl.kill();
       
-      // Create a complete animation cycle
+      // Create a complete animation cycle with smoother easing
       tl = gsap.timeline({ 
-        defaults: { duration: 0.6, ease: "power2.out" },
+        defaults: { 
+          duration: 0.8, 
+          ease: "power3.out",
+          overwrite: "auto"
+        },
         onComplete: () => {
           isAnimating = false;
-          // Restart immediately for continuous loop
-          playSequence();
+          // Add a longer pause before restarting for smoother loop
+          animationId = setTimeout(() => {
+            if (document.visibilityState === 'visible') {
+              playSequence();
+            }
+          }, 800);
         }
       });
       
-      // Fade in bubbles with stagger
+      // Fade in bubbles with smoother stagger
       bubbleRefs.forEach((ref, i) => {
         if (ref.current) {
           tl.fromTo(
             ref.current,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0 },
-            i === 0 ? 0 : "+=0.12"
+            { 
+              opacity: 0, 
+              y: 30,
+              scale: 0.95
+            },
+            { 
+              opacity: 1, 
+              y: 0,
+              scale: 1,
+              ease: "back.out(1.7)"
+            },
+            i === 0 ? 0 : "+=0.15"
           );
         }
       });
       
-      // Add a small pause at the end
-      tl.to({}, { duration: 0.5 });
+      // Add a longer pause for better readability
+      tl.to({}, { duration: 1.2 });
       
-      // Fade out all bubbles together
+      // Fade out all bubbles with smoother transition
       tl.to(bubbleRefs.map(r => r.current), {
         opacity: 0,
-        y: -10,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "power2.in"
+        y: -15,
+        scale: 0.98,
+        duration: 0.5,
+        stagger: 0.08,
+        ease: "power2.inOut"
       });
     }
     
-    // Start animation when component mounts
+    // Start animation when component mounts with longer delay
     const timeoutId = setTimeout(() => {
       if (bubbleRefs.every(ref => ref.current)) {
         playSequence();
       }
-    }, 200);
+    }, 500);
+    
+    // Pause animation when tab is not visible
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        if (tl) tl.pause();
+      } else {
+        if (tl && tl.paused()) tl.resume();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
     
     return () => {
       isAnimating = false;
       clearTimeout(timeoutId);
+      clearTimeout(animationId);
       if (tl) tl.kill();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

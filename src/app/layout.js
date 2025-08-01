@@ -4,6 +4,8 @@ import "./App.css";
 import "./index.css";
 import Navbar from "../components/Navbar";
 import LoadingProvider from "../components/LoadingProvider";
+import SmoothScrollProvider from "../components/SmoothScrollProvider";
+import PerformanceOptimizer from "../components/PerformanceOptimizer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,8 +29,11 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <LoadingProvider>
-          <Navbar />
-          {children}
+          <PerformanceOptimizer />
+          <SmoothScrollProvider>
+            <Navbar />
+            {children}
+          </SmoothScrollProvider>
         </LoadingProvider>
       </body>
     </html>

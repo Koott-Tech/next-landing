@@ -24,7 +24,8 @@ const HeroSection = () => {
       document.body.style.overflowX = 'hidden';
     }
     
-    // Check initial screen size
+    // Check initial screen size with debouncing
+    let resizeTimeout;
     const checkScreenSize = () => {
       if (typeof window !== 'undefined') {
         setIsMobile(window.innerWidth <= 768);
@@ -33,58 +34,63 @@ const HeroSection = () => {
     
     if (typeof window !== 'undefined') {
       checkScreenSize();
-      window.addEventListener('resize', checkScreenSize);
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(checkScreenSize, 100);
+      });
     }
 
-    // Animated text effect
+    // Optimized animated text effect with reduced initial delay
     if (animatedTextRef.current) {
       const line1 = animatedTextRef.current.querySelector('.animated-line-1');
       const line2 = animatedTextRef.current.querySelector('.animated-line-2');
       
       if (line1 && line2) {
-        const tl = gsap.timeline({ repeat: -1 });
+        // Pre-load animations for better performance
+        gsap.set([line1, line2], { opacity: 0, y: 20 });
+        gsap.set(line1.querySelectorAll('.animated-word'), { opacity: 0, y: 10 });
+        gsap.set(line2.querySelectorAll('.animated-word'), { opacity: 0, y: 10 });
         
-        // Show line 1 word by word
+        const tl = gsap.timeline({ 
+          repeat: -1,
+          defaults: { ease: "power2.out" }
+        });
+        
+        // Show line 1 word by word with optimized timing
         tl.to(line1, {
           opacity: 1,
           y: 0,
-          duration: 0.3,
-          ease: "power2.out"
+          duration: 0.2,
         })
         .to(line1.querySelectorAll('.animated-word'), {
           opacity: 1,
           y: 0,
-          duration: 0.4,
-          stagger: 0.1,
-          ease: "power2.out"
+          duration: 0.3,
+          stagger: 0.08,
         }, "-=0.1")
         .to(line1, {
           opacity: 0,
           y: -20,
-          duration: 0.6,
-          ease: "power2.in",
-          delay: 1.5
+          duration: 0.4,
+          delay: 1.2
         })
         // Show line 2 word by word
         .to(line2, {
           opacity: 1,
           y: 0,
-          duration: 0.3,
-          ease: "power2.out"
+          duration: 0.2,
         })
         .to(line2.querySelectorAll('.animated-word'), {
           opacity: 1,
           y: 0,
-          duration: 0.4,
-          stagger: 0.1,
-          ease: "power2.out"
+          duration: 0.3,
+          stagger: 0.08,
         }, "-=0.1")
         .to(line2, {
           opacity: 0,
           y: -20,
-          duration: 0.6,
-          ease: "power2.in",
-          delay: 1.5
+          duration: 0.4,
+          delay: 1.2
         });
       }
     }

@@ -8,68 +8,7 @@ const TypesOfTherapy = () => {
   const rightRef = useRef(null);
   const sectionRef = useRef(null);
 
-  // Refs for chat bubbles
-  const bubbleRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
 
-  useEffect(() => {
-    let tl;
-    let isAnimating = false;
-    
-    function playSequence() {
-      if (isAnimating) return;
-      isAnimating = true;
-      
-      // Kill any existing timeline
-      if (tl) tl.kill();
-      
-      // Create a complete animation cycle
-      tl = gsap.timeline({ 
-        defaults: { duration: 0.6, ease: "power2.out" },
-        onComplete: () => {
-          isAnimating = false;
-          // Restart immediately for continuous loop
-          playSequence();
-        }
-      });
-      
-      // Fade in bubbles with stagger
-      bubbleRefs.forEach((ref, i) => {
-        if (ref.current) {
-          tl.fromTo(
-            ref.current,
-            { opacity: 0, y: 20 },
-            { opacity: 1, y: 0 },
-            i === 0 ? 0 : "+=0.12"
-          );
-        }
-      });
-      
-      // Add a small pause at the end
-      tl.to({}, { duration: 0.5 });
-      
-      // Fade out all bubbles together
-      tl.to(bubbleRefs.map(r => r.current), {
-        opacity: 0,
-        y: -10,
-        duration: 0.3,
-        stagger: 0.05,
-        ease: "power2.in"
-      });
-    }
-    
-    // Start animation when component mounts
-    const timeoutId = setTimeout(() => {
-      if (bubbleRefs.every(ref => ref.current)) {
-        playSequence();
-      }
-    }, 200);
-    
-    return () => {
-      isAnimating = false;
-      clearTimeout(timeoutId);
-      if (tl) tl.kill();
-    };
-  }, []);
 
   return (
     <section
@@ -371,7 +310,7 @@ const TypesOfTherapy = () => {
             >
 
               {/* Patient message */}
-              <div ref={bubbleRefs[0]} className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end", opacity: 0 }}>
+              <div className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end" }}>
                 <div
                   className="chat-bubble"
                   style={{
@@ -393,7 +332,7 @@ const TypesOfTherapy = () => {
                 />
               </div>
               {/* Doctor message */}
-              <div ref={bubbleRefs[1]} className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8, opacity: 0 }}>
+              <div className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
                 <img
                   src={"/irene.jpeg"}
                   alt="Doctor"
@@ -415,7 +354,7 @@ const TypesOfTherapy = () => {
                 </div>
               </div>
               {/* Patient message */}
-              <div ref={bubbleRefs[2]} className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end", opacity: 0 }}>
+              <div className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end" }}>
                 <div
                   className="chat-bubble"
                   style={{
@@ -437,7 +376,7 @@ const TypesOfTherapy = () => {
                 />
               </div>
               {/* Doctor voice message with animation */}
-              <div ref={bubbleRefs[3]} style={{ display: "flex", alignItems: "flex-end", gap: 8, opacity: 0 }}>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
                 <img
                   src={"/irene.jpeg"}
                   alt="Doctor"
@@ -474,7 +413,7 @@ const TypesOfTherapy = () => {
                 </div>
               </div>
               {/* User emoji sticker message with animation */}
-              <div ref={bubbleRefs[4]} style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end", opacity: 0 }}>
+              <div style={{ display: "flex", alignItems: "flex-end", gap: 8, justifyContent: "flex-end" }}>
                 <div
                   style={{
                     background: "#e3f0ff",

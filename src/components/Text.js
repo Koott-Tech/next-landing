@@ -1,110 +1,51 @@
 'use client';
 
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 const text =
   "Empowering your mental wellness journey with expert support, real conversations, and therapy that fits your life—anytime, anywhere.\n\nAvailable in multiple languages, so you can connect in the language you're most comfortable with.";
 
 const Text = () => {
-  const lettersRef = useRef([]);
-  const sectionRef = useRef(null);
+  const targetRef = useRef(null);
 
-    useEffect(() => {
-    if (!lettersRef.current) return;
-    
-    // Focus on desktop view for now
-    const isMobile = false;
-    
-    // Set initial state
-    gsap.set(lettersRef.current, { color: "#bbb" });
-    
-    // Create animation that follows scroll
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: "top 80%", // Start when top of section is 80% down viewport
-        end: "center 20%", // End when center of section is 20% up viewport
-        scrub: 0.1, // Fast scrub for quick response
-        toggleActions: "play none none reverse",
-      },
-    });
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
 
-    // Add the color animation to the timeline
-    tl.to(lettersRef.current, {
-      color: "#111",
-      duration: 0.2, // Even faster duration
-      stagger: {
-        each: 0.0005, // Very fast stagger for desktop
-        ease: "power1.out",
-      },
-    });
-    
-    // Cleanup function
-    return () => {
-      if (tl.scrollTrigger) {
-        tl.scrollTrigger.kill();
-      }
-    };
-  }, []);
+  const words = text.split(" ");
 
   return (
-    <>
-      <style>
-        {`
-          @media (max-width: 768px) {
-            .text-section h1 {
-              font-size: 1.5rem !important;
-              max-width: 90vw !important;
-              padding: 0 20px !important;
-              line-height: 1.4 !important;
-              will-change: color !important;
-              transform: translateZ(0) !important;
-            }
-            .text-section h1 span {
-              will-change: color !important;
-              transform: translateZ(0) !important;
-            }
-          }
-        `}
-      </style>
-      <section
-        ref={sectionRef}
-        className="text-section"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          background: "#fff",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+    <div ref={targetRef} className="relative z-0 h-[200vh] w-full">
+      <div className="sticky top-0 mx-auto flex h-[50%] max-w-4xl items-center bg-transparent px-[1rem] py-[5rem]">
+        <p className="flex flex-wrap p-5 text-2xl font-medium text-black/20 md:p-8 md:text-3xl lg:p-10 lg:text-4xl xl:text-5xl">
+          {words.map((word, i) => {
+            const start = i / words.length;
+            const end = start + 1 / words.length;
+            return (
+              <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                {word}
+              </Word>
+            );
+          })}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const Word = ({ children, progress, range }) => {
+  const opacity = useTransform(progress, range, [0, 1]);
+  return (
+    <span className="relative mx-1 lg:mx-2.5">
+      <span className="absolute opacity-30">{children}</span>
+      <motion.span
+        style={{ opacity: opacity }}
+        className="text-black"
       >
-        <h1
-          style={{
-            fontSize: "2.5rem",
-            fontWeight: 500,
-            textAlign: "center",
-            maxWidth: "900px",
-            lineHeight: 1.2,
-            letterSpacing: "0.01em",
-            wordBreak: "break-word",
-          }}
-        >
-        {text.split("").map((char, i) => (
-          <span
-            key={i}
-            ref={el => (lettersRef.current[i] = el)}
-            style={{ display: char === " " ? "inline-block" : "inline", minWidth: char === " " ? "0.3em" : undefined }}
-          >
-            {char}
-          </span>
-        ))}
-      </h1>
-    </section>
-    </>
+        {children}
+      </motion.span>
+    </span>
   );
 };
 

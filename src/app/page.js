@@ -3,6 +3,8 @@
 import HeroSection from '../components/HeroSection';
 import Text from '../components/Text';
 import TypesOfTherapy from '../components/TypesOfTherapy';
+import HumanChatSection from '../components/HumanChatSection';
+import NeverAloneSection from '../components/NeverAloneSection';
 import PickYourGuide from '../components/PickYourGuide';
 import FormalFAQ from '../components/FormalFAQ';
 import Footer from '../components/Footer';
@@ -13,6 +15,8 @@ export default function Home() {
       <HeroSection />
       <Text />
       <TypesOfTherapy />
+      <HumanChatSection />
+      <NeverAloneSection />
       <PickYourGuide />
       <FormalFAQ />
       <Footer />

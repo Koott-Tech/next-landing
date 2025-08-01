@@ -34,12 +34,13 @@ const TypesOfTherapy = () => {
           display: "flex",
           flexDirection: "row",
           gap: "1.5rem",
-          width: "95vw",
+          width: "90vw",
           maxWidth: 1400,
           alignItems: "center",
           justifyContent: "center",
           willChange: "transform", // Optimize for animations
-          transform: "translateZ(0)" // Force GPU acceleration
+          transform: "translateZ(0)", // Force GPU acceleration
+          padding: "0 20px"
         }}
         className="therapy-container"
       >
@@ -149,6 +150,36 @@ const TypesOfTherapy = () => {
                 max-width: 160px !important;
                 font-size: 0.9rem !important;
                 line-height: 1.2 !important;
+              }
+            }
+            @media (min-width: 769px) and (max-width: 1366px) {
+              .therapy-container {
+                width: 85vw !important;
+                max-width: 1200px !important;
+                gap: 2rem !important;
+                padding: 0 30px !important;
+              }
+              .therapy-card-left, .therapy-card-right {
+                width: 600px !important;
+                min-width: 600px !important;
+                height: 450px !important;
+              }
+              .therapy-card-left h2, .therapy-card-right h2 {
+                font-size: 1.2rem !important;
+                max-width: 220px !important;
+              }
+              .chat-interface {
+                width: 180px !important;
+                min-width: 160px !important;
+                min-height: 280px !important;
+                margin-right: 70px !important;
+              }
+              .video-cards-container {
+                margin-left: 20px !important;
+              }
+              .video-card {
+                width: 150px !important;
+                height: 100px !important;
               }
             }
             @media (min-width: 1920px) {
@@ -536,7 +567,7 @@ const TypesOfTherapy = () => {
                   }
                   .therapy-card:hover {
                     transform: scale(1.12) !important;
-                    z-index: 20 !important;
+                    z-index: 15 !important;
                     box-shadow: 0 12px 36px rgba(39,174,96,0.22), 0 4px 16px rgba(0,0,0,0.12) !important;
                   }
                 `}</style>

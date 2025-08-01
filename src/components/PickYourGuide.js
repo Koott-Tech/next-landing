@@ -20,8 +20,7 @@ const PickYourGuide = () => {
     gsap.set(cards, { 
       opacity: 0, 
       y: 80,
-      scale: 0.9,
-      rotationX: 15
+      scale: 0.9
     });
     
     // Use ScrollTrigger for smoother animations
@@ -35,7 +34,7 @@ const PickYourGuide = () => {
           end: "center center", // End when section reaches center
           toggleActions: "play none none reverse",
           once: true,
-          scrub: 1.5, // Even smoother scrubbing
+          scrub: 0.8, // Optimized scrubbing for better performance
         }
       });
       
@@ -44,11 +43,9 @@ const PickYourGuide = () => {
         opacity: 1,
         y: 0,
         scale: 1,
-        rotationX: 0,
-        duration: 3.2, // Much longer duration for ultra-smooth animation
-        stagger: 0.2, // Longer stagger for more elegant sequence
-        ease: "power1.out", // Smoother easing curve
-        clearProps: "rotationX" // Clear 3D transform after animation
+        duration: 1.5, // Reduced duration for better performance
+        stagger: 0.1, // Reduced stagger for smoother animation
+        ease: "power2.out", // Simpler easing curve
       });
       
       return () => {
@@ -143,14 +140,14 @@ const PickYourGuide = () => {
             border: 2px solid #e0e7ef;
             position: relative;
             transform: translateZ(0); /* Force GPU acceleration */
-            backface-visibility: hidden; /* Optimize for 3D transforms */
+            /* Removed backface-visibility for better performance */
           }
           .guide-card:first-child {
             margin-left: 0;
           }
           .guide-card:hover {
             transform: scale(1.13) translateY(-18px);
-            z-index: 99 !important;
+            z-index: 20 !important;
             box-shadow: 0 16px 48px rgba(39,174,96,0.22), 0 4px 16px rgba(0,0,0,0.12);
           }
         `}</style>

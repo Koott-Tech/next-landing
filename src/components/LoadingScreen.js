@@ -74,7 +74,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           transform: 'translateZ(0)', // Force GPU acceleration
         }}
       >
-        Koott
+        Hopelly
       </div>
     </div>
   );

@@ -93,19 +93,13 @@ const HeroSection = () => {
     if (typeof window !== 'undefined' && !isMobile) {
       gsap.registerPlugin(ScrollTrigger);
       
-      // Hero section scaling animation
-      gsap.to(heroRef.current, {
-        height: "80vh",
-        maxWidth: "95vw",
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 0.5, // Smooth scrubbing
-          pin: false,
-        }
+      // Add throttling to scroll events
+      ScrollTrigger.config({
+        limitCallbacks: true,
+        syncInterval: 60,
       });
+      
+      // Hero section scaling animation removed for better performance
 
       // Company name fade out
       gsap.to(companyRef.current, {
@@ -178,7 +172,7 @@ const HeroSection = () => {
         maxWidth: "100vw",
         height: "100vh",
         overflow: "hidden",
-        transition: "height 0.3s, max-width 0.3s",
+        transition: "none",
         background: "#fff", // fallback background for when width shrinks
         display: "block",
         margin: "0 auto",
@@ -386,7 +380,7 @@ const HeroSection = () => {
           transition: "opacity 0.3s, transform 0.3s",
         }}
       >
-        Hoptive
+                    Hopelly
       </div>
       {/* Login and Get Started buttons at right */}
       <div

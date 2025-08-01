@@ -182,7 +182,8 @@ const Timeline = ({ data }) => {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 10%", "end 50%"],
+    offset: ["start end", "end start"],
+    layoutEffect: false,
   });
 
   const heightTransform = useTransform(scrollYProgress, [0, 1], [0, height]);
@@ -208,7 +209,7 @@ const Timeline = ({ data }) => {
             key={index}
             className="flex justify-start pt-10 md:pt-40 md:gap-10"
           >
-                         <div className="sticky flex flex-col md:flex-row z-40 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full">
+                         <div className="sticky flex flex-col md:flex-row z-10 items-center top-40 self-start max-w-xs lg:max-w-sm md:w-full scroll-optimized">
                <div className="h-10 absolute left-3 md:left-3 w-10 rounded-full bg-white flex items-center justify-center">
                  <div className="h-4 w-4 rounded-full bg-green-500 border border-green-300 p-2" />
                </div>

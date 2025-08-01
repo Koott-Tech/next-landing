@@ -62,7 +62,7 @@ const PickYourGuide = () => {
   }, [cardRefs]);
 
   return (
-    <section ref={sectionRef} style={{ width: "100vw", height: "100vh", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "4.5rem" }}>
+    <section ref={sectionRef} style={{ width: "100vw", minHeight: "100vh", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "4.5rem", paddingBottom: "2rem" }}>
       <h1 style={{ fontSize: "3.2rem", fontWeight: 800, color: "#1a1a1a", textAlign: "center", letterSpacing: "-0.01em", lineHeight: 1.1, maxWidth: 900, marginBottom: "2.5rem" }}>
         Meet Your Guide to Wellness
       </h1>
@@ -76,7 +76,7 @@ const PickYourGuide = () => {
             overflow: hidden;
             padding: 0.85rem 2.2rem;
             border-radius: 15px;
-            border: none;
+            border: 2px solid #27ae60;
             background: #fff;
             color: #27ae60;
             font-weight: 700;
@@ -179,7 +179,7 @@ const PickYourGuide = () => {
           </div>
         ))}
       </div>
-      <div style={{ marginTop: '4.5rem' }}>
+      <div style={{ marginTop: '4.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2.5rem' }}>
         <style>{`
           .find-therapist-btn {
             position: relative;
@@ -219,9 +219,49 @@ const PickYourGuide = () => {
             position: relative;
             z-index: 1;
           }
+          .choose-guide-btn {
+            position: relative;
+            overflow: hidden;
+            padding: 0.85rem 2.2rem;
+            border-radius: 15px;
+            border: 2px solid #27ae60;
+            background: #fff;
+            color: #27ae60;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.12);
+            transition: color 0.2s ease;
+            z-index: 1;
+            box-sizing: border-box;
+          }
+          .choose-guide-btn::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -100%;
+            width: 100%;
+            height: 100%;
+            background: #27ae60;
+            z-index: 0;
+            transition: bottom 0.4s cubic-bezier(.4,2,.6,1), opacity 0.2s;
+            opacity: 0.95;
+          }
+          .choose-guide-btn:hover::before {
+            bottom: 0;
+          }
+          .choose-guide-btn:hover {
+            color: #fff;
+            border: 2px solid #27ae60;
+          }
+          .choose-guide-btn span {
+            position: relative;
+            z-index: 1;
+          }
         `}</style>
-        <button className="find-therapist-btn" onClick={() => setShowOnboarding(true)}>
-          <span>Find My Therapist</span>
+        
+        <button className="choose-guide-btn" onClick={() => window.open('/guide', '_blank')}>
+          <span>Choose Your Therapist</span>
         </button>
         <OnboardingModal open={showOnboarding} onClose={() => setShowOnboarding(false)} onComplete={() => { setShowOnboarding(false); router.push('/guide'); }} />
       </div>

@@ -6,6 +6,8 @@ import TypesOfTherapy from '../components/TypesOfTherapy';
 import HumanChatSection from '../components/HumanChatSection';
 import NeverAloneSection from '../components/NeverAloneSection';
 import PickYourGuide from '../components/PickYourGuide';
+import HowItWorks from '../components/HowItWorks';
+import ClientReview from '../components/ClientReview';
 import FormalFAQ from '../components/FormalFAQ';
 import Footer from '../components/Footer';
 
@@ -18,6 +20,8 @@ export default function Home() {
       <HumanChatSection />
       <NeverAloneSection />
       <PickYourGuide />
+      <HowItWorks />
+      <ClientReview />
       <FormalFAQ />
       <Footer />
     </>

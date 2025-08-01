@@ -67,7 +67,7 @@ const FormalFAQ = () => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "flex-start",
-        padding: "0 0 60px 0",
+        padding: "4rem 0 60px 0",
         position: "relative",
         zIndex: 1
       }}
@@ -84,52 +84,7 @@ const FormalFAQ = () => {
           minHeight: "calc(100vh - 120px)"
         }}
       >
-        {/* Choose Your Guide Button */}
-        <div style={{ marginTop: "2rem", marginBottom: "1rem" }}>
-          <style>{`
-            .choose-guide-btn {
-              position: relative;
-              overflow: hidden;
-              padding: 0.85rem 2.2rem;
-              border-radius: 15px;
-              border: none;
-              background: #27ae60;
-              color: #fff;
-              font-weight: 700;
-              font-size: 1.1rem;
-              cursor: pointer;
-              box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.12);
-              transition: color 0.2s, border 0.2s;
-              z-index: 1;
-            }
-            .choose-guide-btn::before {
-              content: "";
-              position: absolute;
-              left: 0;
-              bottom: -100%;
-              width: 100%;
-              height: 100%;
-              background: #fff;
-              z-index: 0;
-              transition: bottom 0.4s cubic-bezier(.4,2,.6,1), opacity 0.2s;
-              opacity: 0.95;
-            }
-            .choose-guide-btn:hover::before {
-              bottom: 0;
-            }
-            .choose-guide-btn:hover {
-              color: #27ae60;
-              border: none;
-            }
-            .choose-guide-btn span {
-              position: relative;
-              z-index: 1;
-            }
-          `}</style>
-          <button className="choose-guide-btn" onClick={() => window.open('/guide', '_blank')}>
-            <span>Choose Your Guide</span>
-          </button>
-        </div>
+
         {/* Header */}
         <div
           style={{

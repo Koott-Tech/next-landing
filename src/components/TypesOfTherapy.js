@@ -384,7 +384,7 @@ const TypesOfTherapy = () => {
                     boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                   }}
                 >
-                  Hi Doctor, I'm feeling anxious lately. What should I do?
+                  Hi Doctor, I&apos;m feeling anxious lately. What should I do?
                 </div>
                 <img
                   src={"/patient.jpg"}
@@ -411,7 +411,7 @@ const TypesOfTherapy = () => {
                     boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
                   }}
                 >
-                  Hi! It's normal to feel anxious sometimes. Let's talk about some relaxation techniques.
+                  Hi! It&apos;s normal to feel anxious sometimes. Let&apos;s talk about some relaxation techniques.
                 </div>
               </div>
               {/* Patient message */}

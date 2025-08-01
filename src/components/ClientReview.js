@@ -174,7 +174,7 @@ const ClientReview = () => {
                     textShadow: "0 1px 3px rgba(0,0,0,0.5)"
                   }}
                 >
-                  "{review.message}"
+                  &ldquo;{review.message}&rdquo;
                 </p>
                 
                 {/* Client Info */}

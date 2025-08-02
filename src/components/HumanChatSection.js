@@ -1,16 +1,18 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useEffect, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// Import throttle utility for better performance
+import { throttle } from '../utils/scrollUtils';
 
 const HumanChatSection = () => {
   const targetRef = useRef(null);
-
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start end", "end 20%"],
-    layoutEffect: false,
-  });
+  const textRef = useRef(null);
+  const paragraphRef = useRef(null);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [currentParagraphIndex, setCurrentParagraphIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   // Text phrases for animation
   const textPhrases = ["Get started", "Effortless", "Full picture", "Goal driven"];
@@ -22,6 +24,42 @@ const HumanChatSection = () => {
     "Get a comprehensive understanding of your progress with detailed insights and tracking.",
     "Stay motivated and focused on your mental health goals with our supportive platform."
   ];
+  
+  useEffect(() => {
+    if (typeof window === 'undefined' || !targetRef.current) return;
+    
+    // Register ScrollTrigger
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Create a ScrollTrigger that tracks scroll progress
+    const scrollTrigger = ScrollTrigger.create({
+      trigger: targetRef.current,
+      start: "top bottom", // when top of the trigger hits bottom of viewport
+      end: "bottom top", // when bottom of the trigger hits top of viewport
+      onUpdate: throttle((self) => {
+        // Update scroll progress (0-1 range)
+        setScrollProgress(self.progress);
+        
+        // Calculate which text/paragraph should be visible based on scroll progress
+        const textIndex = Math.min(
+          Math.floor(self.progress * textPhrases.length),
+          textPhrases.length - 1
+        );
+        const paragraphIndex = Math.min(
+          Math.floor(self.progress * paragraphPhrases.length),
+          paragraphPhrases.length - 1
+        );
+        
+        setCurrentTextIndex(textIndex);
+        setCurrentParagraphIndex(paragraphIndex);
+      }, 16) // Throttle to 60fps for better performance
+    });
+    
+    return () => {
+      // Clean up ScrollTrigger
+      scrollTrigger.kill();
+    };
+  }, [textPhrases.length, paragraphPhrases.length]);
 
   return (
     <div ref={targetRef} className="relative z-0 h-[300vh] w-full">
@@ -32,7 +70,8 @@ const HumanChatSection = () => {
             {/* Animated Heading */}
             <div className="mb-6">
               <AnimatedText 
-                scrollYProgress={scrollYProgress} 
+                currentIndex={currentTextIndex}
+                scrollProgress={scrollProgress}
                 textPhrases={textPhrases} 
               />
             </div>
@@ -40,7 +79,8 @@ const HumanChatSection = () => {
             {/* Animated Paragraph */}
             <div className="max-w-lg">
               <AnimatedParagraph 
-                scrollYProgress={scrollYProgress} 
+                currentIndex={currentParagraphIndex}
+                scrollProgress={scrollProgress}
                 paragraphPhrases={paragraphPhrases} 
               />
             </div>
@@ -60,27 +100,18 @@ const HumanChatSection = () => {
   );
 };
 
-const AnimatedText = ({ scrollYProgress, textPhrases }) => {
-  // Calculate which text should be visible based on scroll progress
-  const currentIndex = useTransform(scrollYProgress, (value) => {
-    const index = Math.floor(value * textPhrases.length);
-    return Math.min(index, textPhrases.length - 1);
-  });
-
+const AnimatedText = ({ currentIndex, scrollProgress, textPhrases }) => {
   // Get the current text to display
-  const currentText = useTransform(currentIndex, (index) => textPhrases[index] || textPhrases[0]);
+  const currentText = textPhrases[currentIndex] || textPhrases[0];
 
   // Calculate fade animation for the current text
-  const fadeProgress = useTransform(scrollYProgress, (value) => {
-    const phaseProgress = (value * textPhrases.length) % 1;
-    return phaseProgress;
-  });
+  const phaseProgress = (scrollProgress * textPhrases.length) % 1;
 
   // Special opacity logic for first and last text
-  const opacity = useTransform(scrollYProgress, (value) => {
+  const getOpacity = () => {
     const totalPhases = textPhrases.length;
-    const currentPhase = Math.floor(value * totalPhases);
-    const phaseProgress = (value * totalPhases) % 1;
+    const currentPhase = Math.floor(scrollProgress * totalPhases);
+    const phaseProgress = (scrollProgress * totalPhases) % 1;
     
     // First text (index 0) - sticks to viewport longer before changing
     if (currentPhase === 0) {
@@ -93,7 +124,7 @@ const AnimatedText = ({ scrollYProgress, textPhrases }) => {
     }
     
     // Check if we've reached the last text phase - if so, keep last text visible
-    if (value >= (totalPhases - 1) / totalPhases) {
+    if (scrollProgress >= (totalPhases - 1) / totalPhases) {
       return 1; // Keep last text visible
     }
     
@@ -101,43 +132,42 @@ const AnimatedText = ({ scrollYProgress, textPhrases }) => {
     if (phaseProgress < 0.3) return 0;
     if (phaseProgress > 0.7) return 1 - ((phaseProgress - 0.7) / 0.3);
     return 1;
-  });
+  };
 
-  const y = useTransform(fadeProgress, [0, 0.3, 0.7, 1], [20, 0, 0, -20]);
+  const getY = () => {
+    if (phaseProgress < 0.3) return 20;
+    if (phaseProgress > 0.7) return -20;
+    return 0;
+  };
 
   return (
     <div className="relative h-16 flex items-center justify-center">
-      <motion.div
-        style={{ opacity, y }}
+      <div
+        style={{ 
+          opacity: getOpacity(), 
+          transform: `translateY(${getY()}px)`,
+          transition: 'opacity 0.3s ease, transform 0.3s ease'
+        }}
         className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 scroll-optimized"
       >
         {currentText}
-      </motion.div>
+      </div>
     </div>
   );
 };
 
-const AnimatedParagraph = ({ scrollYProgress, paragraphPhrases }) => {
-  // Calculate which paragraph should be visible based on scroll progress
-  const currentIndex = useTransform(scrollYProgress, (value) => {
-    const index = Math.floor(value * paragraphPhrases.length);
-    return Math.min(index, paragraphPhrases.length - 1);
-  });
-
+const AnimatedParagraph = ({ currentIndex, scrollProgress, paragraphPhrases }) => {
   // Get the current paragraph to display
-  const currentParagraph = useTransform(currentIndex, (index) => paragraphPhrases[index] || paragraphPhrases[0]);
+  const currentParagraph = paragraphPhrases[currentIndex] || paragraphPhrases[0];
 
   // Calculate fade animation for the current paragraph
-  const fadeProgress = useTransform(scrollYProgress, (value) => {
-    const phaseProgress = (value * paragraphPhrases.length) % 1;
-    return phaseProgress;
-  });
+  const phaseProgress = (scrollProgress * paragraphPhrases.length) % 1;
 
   // Special opacity logic for first and last paragraph
-  const opacity = useTransform(scrollYProgress, (value) => {
+  const getOpacity = () => {
     const totalPhases = paragraphPhrases.length;
-    const currentPhase = Math.floor(value * totalPhases);
-    const phaseProgress = (value * totalPhases) % 1;
+    const currentPhase = Math.floor(scrollProgress * totalPhases);
+    const phaseProgress = (scrollProgress * totalPhases) % 1;
     
     // First paragraph (index 0) - sticks to viewport longer before changing
     if (currentPhase === 0) {
@@ -150,7 +180,7 @@ const AnimatedParagraph = ({ scrollYProgress, paragraphPhrases }) => {
     }
     
     // Check if we've reached the last paragraph phase - if so, keep last paragraph visible
-    if (value >= (totalPhases - 1) / totalPhases) {
+    if (scrollProgress >= (totalPhases - 1) / totalPhases) {
       return 1; // Keep last paragraph visible
     }
     
@@ -158,22 +188,30 @@ const AnimatedParagraph = ({ scrollYProgress, paragraphPhrases }) => {
     if (phaseProgress < 0.3) return 0;
     if (phaseProgress > 0.7) return 1 - ((phaseProgress - 0.7) / 0.3);
     return 1;
-  });
+  };
 
-  const y = useTransform(fadeProgress, [0, 0.3, 0.7, 1], [20, 0, 0, -20]);
+  const getY = () => {
+    if (phaseProgress < 0.3) return 20;
+    if (phaseProgress > 0.7) return -20;
+    return 0;
+  };
 
   return (
     <div className="relative min-h-[80px] flex items-center">
-      <motion.p
-        style={{ opacity, y }}
+      <p
+        style={{ 
+          opacity: getOpacity(), 
+          transform: `translateY(${getY()}px)`,
+          transition: 'opacity 0.3s ease, transform 0.3s ease'
+        }}
         className="text-base md:text-lg text-gray-700 leading-relaxed scroll-optimized"
       >
         {currentParagraph}
-      </motion.p>
+      </p>
     </div>
   );
 };
 
 
 
-export default HumanChatSection; 
+export default HumanChatSection;

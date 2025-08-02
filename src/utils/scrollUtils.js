@@ -1,4 +1,4 @@
-// Scroll throttling utility for better performance
+// Throttle function for scroll performance optimization
 export const throttle = (func, limit) => {
   let inThrottle;
   return function() {
@@ -9,7 +9,20 @@ export const throttle = (func, limit) => {
       inThrottle = true;
       setTimeout(() => inThrottle = false, limit);
     }
-  }
+  };
+};
+
+// Debounce function for search and other input events
+export const debounce = (func, wait) => {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func(...args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
 };
 
 // Optimized scroll handler

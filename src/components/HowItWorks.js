@@ -51,17 +51,17 @@ const HowItWorks = () => {
              Book sessions that fit your schedule. Our flexible scheduling system allows you to find the perfect time for your therapy sessions.
            </p>
           <div className="flex items-center justify-center">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full">
+            <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-sm w-full">
               {/* Calendar Header */}
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">Book Your Session</h3>
-                <p className="text-gray-600">Select a date and time that works for you</p>
+              <div className="text-center mb-4">
+                <h3 className="text-lg font-bold text-gray-800 mb-1">Book Your Session</h3>
+                <p className="text-gray-600 text-sm">Select a date and time that works for you</p>
               </div>
               
               {/* Calendar Grid */}
-              <div className="grid grid-cols-7 gap-2 mb-6">
+              <div className="grid grid-cols-7 gap-1 mb-4">
                 {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
-                  <div key={`header-${index}`} className="text-center text-sm font-medium text-gray-500 py-2">
+                  <div key={`header-${index}`} className="text-center text-xs font-medium text-gray-500 py-1">
                     {day}
                   </div>
                 ))}
@@ -72,7 +72,7 @@ const HowItWorks = () => {
                   return (
                     <div
                       key={`day-${day}`}
-                      className={`text-center py-2 rounded-lg cursor-pointer transition-all duration-200 ${
+                      className={`text-center py-1 rounded-lg cursor-pointer transition-all duration-200 text-xs ${
                         isSelected 
                           ? 'bg-green-500 text-white' 
                           : isAvailable 
@@ -87,12 +87,12 @@ const HowItWorks = () => {
               </div>
               
               {/* Time Slots */}
-              <div className="space-y-3">
-                <h4 className="font-semibold text-gray-800 mb-3">Available Times</h4>
+              <div className="space-y-2">
+                <h4 className="font-semibold text-gray-800 mb-2 text-sm">Available Times</h4>
                 {['9:00 AM', '11:00 AM', '2:00 PM', '4:00 PM'].map((time, index) => (
                   <div
                     key={time}
-                    className={`p-3 rounded-lg border-2 cursor-pointer transition-all duration-200 ${
+                    className={`p-2 rounded-lg border-2 cursor-pointer transition-all duration-200 text-sm ${
                       index === 1 
                         ? 'border-green-500 bg-green-50 text-green-700' 
                         : 'border-gray-200 hover:border-green-300'
@@ -104,7 +104,7 @@ const HowItWorks = () => {
               </div>
               
               {/* Book Button */}
-              <button className="w-full mt-6 bg-green-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200">
+              <button className="w-full mt-4 bg-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-600 transition-colors duration-200 text-sm">
                 Book Session
               </button>
             </div>

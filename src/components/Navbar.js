@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import Link from "next/link";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -103,9 +104,9 @@ const Navbar = () => {
           border: "1px solid rgba(255,255,255,0.4)",
         }}
       >
-        <a href="#about" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>About Us</a>
-        <a href="#chat" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Chat</a>
-        <a href="#therapist" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Therapist</a>
+        <Link href="#about" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>About Us</Link>
+        <Link href="/chat-therapy" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Chat Therapy</Link>
+        <Link href="#therapist" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Therapist</Link>
       </nav>
 
       {/* Mobile Menu Button */}
@@ -118,9 +119,9 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className="mobile-menu">
-        <a href="#about" onClick={() => setIsMenuOpen(false)}>About Us</a>
-        <a href="#chat" onClick={() => setIsMenuOpen(false)}>Chat</a>
-        <a href="#therapist" onClick={() => setIsMenuOpen(false)}>Therapist</a>
+        <Link href="#about" onClick={() => setIsMenuOpen(false)}>About Us</Link>
+        <Link href="/chat-therapy" onClick={() => setIsMenuOpen(false)}>Chat Therapy</Link>
+        <Link href="#therapist" onClick={() => setIsMenuOpen(false)}>Therapist</Link>
       </div>
     </>
   );

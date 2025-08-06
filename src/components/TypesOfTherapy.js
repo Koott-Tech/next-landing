@@ -1,12 +1,17 @@
 'use client';
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
+import OnboardingModal from './OnboardingModal';
+import { useRouter } from 'next/navigation';
+import { createPortal } from 'react-dom';
 
 const TypesOfTherapy = () => {
   const leftRef = useRef(null);
   const rightRef = useRef(null);
   const sectionRef = useRef(null);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const router = useRouter();
 
 
 
@@ -522,7 +527,7 @@ const TypesOfTherapy = () => {
                 transform: translateX(6px);
               }
             `}</style>
-            <button className="therapy-getstarted-btn" onClick={() => window.location.href = 'https://mind-connect-therapy-hub.lovable.app'}>
+            <button className="therapy-getstarted-btn" onClick={() => setShowOnboarding(true)}>
               <span>Get Started</span>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
@@ -685,13 +690,24 @@ const TypesOfTherapy = () => {
           </div>
           {/* Get Started Button for Video Sessions */}
           <div style={{ position: "absolute", bottom: 20, left: 40, zIndex: 3 }}>
-            <button className="therapy-getstarted-btn" onClick={() => window.open('https://mind-connect-therapy-hub.lovable.app', '_blank')}>
+            <button className="therapy-getstarted-btn" onClick={() => setShowOnboarding(true)}>
               <span>Get Started</span>
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
         </div>
       </div>
+      {typeof document !== 'undefined' && createPortal(
+        <OnboardingModal 
+          open={showOnboarding} 
+          onClose={() => setShowOnboarding(false)} 
+          onComplete={() => { 
+            setShowOnboarding(false); 
+            router.push('/guide'); 
+          }} 
+        />,
+        document.body
+      )}
     </section>
   );
 };

@@ -66,22 +66,26 @@ const PickYourGuide = () => {
       <p style={{ fontSize: "1.18rem", color: "#444", textAlign: "center", maxWidth: 600, fontWeight: 500, margin: 0 }}>
         Skilled, supportive mental health professionals offering 1-on-1 guidance that leads to quick, thoughtful progress.
       </p>
-      <div style={{ marginTop: "2.2rem" }}>
+      <div style={{ marginTop: "2.2rem", marginBottom: "3.2rem", height: "60px", display: "flex", alignItems: "center", justifyContent: "center" }}>
         <style>{`
           .meet-them-btn {
             position: relative;
             overflow: hidden;
-            padding: 0.85rem 2.2rem;
-            border-radius: 15px;
+            padding: 0.6rem 1.5rem;
+            border-radius: 12px;
             border: 2px solid #27ae60;
             background: #fff;
             color: #27ae60;
             font-weight: 700;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             cursor: pointer;
-            box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.12);
-            transition: color 0.2s, border 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.1);
+            transition: color 0.2s ease;
             z-index: 1;
+            transform: translateZ(0);
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: top;
           }
           .meet-them-btn::before {
             content: "";
@@ -100,7 +104,7 @@ const PickYourGuide = () => {
           }
           .meet-them-btn:hover {
             color: #fff;
-            border: none;
+            border: 2px solid #27ae60;
           }
           .meet-them-btn span {
             position: relative;
@@ -114,7 +118,6 @@ const PickYourGuide = () => {
       {/* Guide cards row */}
       <div style={{
         width: "100%",
-        marginTop: "3.2rem",
         display: "flex",
         alignItems: "flex-end",
         justifyContent: "center",
@@ -123,6 +126,7 @@ const PickYourGuide = () => {
         gap: 20,
         willChange: "transform",
         transform: "translateZ(0)", // Force GPU acceleration
+        isolation: "isolate",
       }}>
         <style>{`
           .guide-card {
@@ -131,24 +135,18 @@ const PickYourGuide = () => {
             transition: transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s;
             margin-left: -40px;
             z-index: 1;
-            width: 200px;
+            width: 240px;
             height: 300px;
-            border-radius: 10px;
+            border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10);
             background: #fff;
-            border: 2px solid #e0e7ef;
+            border: none;
             position: relative;
-            transform: translateZ(0); /* Force GPU acceleration */
             /* Removed backface-visibility for better performance */
           }
           .guide-card:first-child {
             margin-left: 0;
-          }
-          .guide-card:hover {
-            transform: scale(1.13) translateY(-18px);
-            z-index: 20 !important;
-            box-shadow: 0 16px 48px rgba(39,174,96,0.22), 0 4px 16px rgba(0,0,0,0.12);
           }
         `}</style>
         {[1,2,3,4,5,6].map((num, idx) => (
@@ -156,14 +154,24 @@ const PickYourGuide = () => {
             className="guide-card"
             key={num}
             ref={cardRefs[idx]}
-            style={{ zIndex: idx+1 }}
+            style={{ 
+              zIndex: idx+1,
+              transform: `rotate(${idx % 2 === 0 ? 2 : -2}deg)`,
+              transition: 'transform 0.25s cubic-bezier(.4,2,.6,1), box-shadow 0.2s'
+            }}
             onMouseEnter={(e) => {
               const video = e.currentTarget.querySelector('video');
               if (video) video.play();
+              e.currentTarget.style.transform = `rotate(${idx % 2 === 0 ? 2 : -2}deg) scale(1.15) translateY(-15px)`;
+              e.currentTarget.style.zIndex = '20';
+              e.currentTarget.style.boxShadow = '0 20px 60px rgba(39,174,96,0.25), 0 8px 24px rgba(0,0,0,0.15)';
             }}
             onMouseLeave={(e) => {
               const video = e.currentTarget.querySelector('video');
               if (video) video.pause();
+              e.currentTarget.style.transform = `rotate(${idx % 2 === 0 ? 2 : -2}deg)`;
+              e.currentTarget.style.zIndex = idx + 1;
+              e.currentTarget.style.boxShadow = '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.10)';
             }}
           >
             <video
@@ -219,18 +227,17 @@ const PickYourGuide = () => {
           .choose-guide-btn {
             position: relative;
             overflow: hidden;
-            padding: 0.85rem 2.2rem;
+            padding: 0.75rem 2rem;
             border-radius: 15px;
-            border: 2px solid #27ae60;
-            background: #fff;
-            color: #27ae60;
+            border: none;
+            background: #27ae60;
+            color: #fff;
             font-weight: 700;
             font-size: 1.1rem;
             cursor: pointer;
             box-shadow: 0 6px 24px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.12);
-            transition: color 0.2s ease;
+            transition: color 0.2s;
             z-index: 1;
-            box-sizing: border-box;
           }
           .choose-guide-btn::before {
             content: "";
@@ -239,17 +246,17 @@ const PickYourGuide = () => {
             bottom: -100%;
             width: 100%;
             height: 100%;
-            background: #27ae60;
+            background: #fff;
             z-index: 0;
             transition: bottom 0.4s cubic-bezier(.4,2,.6,1), opacity 0.2s;
-            opacity: 0.95;
+            opacity: 0.9;
           }
           .choose-guide-btn:hover::before {
             bottom: 0;
           }
           .choose-guide-btn:hover {
-            color: #fff;
-            border: 2px solid #27ae60;
+            color: #27ae60;
+            border: none;
           }
           .choose-guide-btn span {
             position: relative;

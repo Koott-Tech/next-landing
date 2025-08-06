@@ -64,7 +64,14 @@ const HumanChatSection = () => {
   return (
     <div ref={targetRef} className="relative z-0 h-[300vh] w-full">
       <div className="sticky-optimized mx-auto flex h-screen items-center justify-center bg-white px-[1rem] py-[5rem]">
-        <div className="flex flex-row items-center justify-between w-full max-w-6xl gap-16">
+        {/* Centered Heading */}
+        <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center z-10 max-w-4xl w-full px-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-32">
+            You need a human to chat, not a bot
+          </h2>
+        </div>
+        
+        <div className="flex flex-row items-center justify-between w-full max-w-6xl gap-16 mt-48">
           {/* Left side - Animated text */}
           <div className="flex-1 flex flex-col items-start justify-center text-left">
             {/* Animated Heading */}

@@ -32,7 +32,7 @@ const EXPERTS = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#f8f9fa", color: "#333", padding: "3.5rem 0 2.2rem 0", marginTop: 60 }}>
+    <footer style={{ background: "#f8f9fa", color: "#333", padding: "3.5rem 0 2.2rem 0", marginTop: 0 }}>
       <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 32px", display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between" }}>
         <div style={{ minWidth: 220, flex: 1 }}>
           <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Languages of India</h3>

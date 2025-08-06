@@ -23,6 +23,21 @@ export default function Home() {
       <HowItWorks />
       <ClientReview />
       <FormalFAQ />
+      
+      {/* Clouds Image */}
+      <div style={{ width: '100%', height: '250px', overflow: 'hidden', marginTop: '60px', marginBottom: '0' }}>
+        <img 
+          src="/clouds.jpg" 
+          alt="Clouds" 
+          style={{ 
+            width: '100%', 
+            height: '100%', 
+            objectFit: 'cover',
+            objectPosition: 'center'
+          }} 
+        />
+      </div>
+      
       <Footer />
     </>
   );

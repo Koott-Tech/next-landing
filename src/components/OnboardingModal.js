@@ -1,8 +1,14 @@
 'use client';
 
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
 
 const STEPS = [
+  {
+    label: "How would you like to connect?",
+    key: "connectionType",
+    options: ["Chat", "Meet"]
+  },
   {
     label: "What are you seeking help for?",
     key: "condition",
@@ -18,11 +24,6 @@ const STEPS = [
     ]
   },
   {
-    label: "What kind of session do you prefer?",
-    key: "sessionType",
-    options: ["Chat", "Video Call"]
-  },
-  {
     label: "What is your age group?",
     key: "ageGroup",
     options: ["Under 18", "18-25", "26-40", "41-60", "60+"]
@@ -32,12 +33,21 @@ const STEPS = [
 export default function OnboardingModal({ open, onClose, onComplete }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const router = useRouter();
 
   if (!open) return null;
 
   const handleSelect = (option) => {
     const key = STEPS[step].key;
     setAnswers((prev) => ({ ...prev, [key]: option }));
+    
+    // If this is the first step and "Chat" is selected, redirect immediately
+    if (step === 0 && option === "Chat") {
+      onClose();
+      router.push('/chat-therapy');
+      return;
+    }
+    
     if (step < STEPS.length - 1) {
       setStep(step + 1);
     } else {

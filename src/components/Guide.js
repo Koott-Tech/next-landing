@@ -43,19 +43,51 @@ const DOCTORS = [
 const Guide = () => {
   const [selected, setSelected] = useState(null);
   const [showOnboarding, setShowOnboarding] = React.useState(false);
+  const [showDateTimePicker, setShowDateTimePicker] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
+  const [selectedDoctor, setSelectedDoctor] = useState(null);
   const router = useRouter();
 
   // Prevent background scroll when modal is open
   React.useEffect(() => {
     if (typeof document !== 'undefined') {
-      if (selected !== null) {
+      if (selected !== null || showDateTimePicker || showPaymentModal) {
         document.body.style.overflow = 'hidden';
       } else {
         document.body.style.overflow = '';
       }
       return () => { document.body.style.overflow = ''; };
     }
-  }, [selected]);
+  }, [selected, showDateTimePicker, showPaymentModal]);
+
+  const handleBookSession = (doctor) => {
+    setSelectedDoctor(doctor);
+    setShowDateTimePicker(true);
+    setSelected(null); // Close doctor modal
+  };
+
+  const handleDateTimeConfirm = () => {
+    if (selectedDate && selectedTime) {
+      setShowDateTimePicker(false);
+      setShowPaymentModal(true);
+    }
+  };
+
+  const handlePaymentSuccess = () => {
+    setShowPaymentModal(false);
+    setSelectedDate('');
+    setSelectedTime('');
+    setSelectedDoctor(null);
+    // Redirect to chat session or show success message
+    router.push('/chat-therapy');
+  };
+
+  const handlePaymentCancel = () => {
+    setShowPaymentModal(false);
+    setShowDateTimePicker(true);
+  };
 
   return (
     <div style={{ width: "100vw", minHeight: "100vh", background: "#f8fafc", overflowX: "hidden", position: "relative" }}>
@@ -90,7 +122,7 @@ const Guide = () => {
       <div style={{ position: "relative", zIndex: 3 }}>
   
       </div>
-      <section style={{ width: "100vw", minHeight: "100vh", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "4.5rem", paddingBottom: "4rem" }}>
+      <section style={{ width: "100vw", minHeight: "100vh", background: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-start", paddingTop: "8rem", paddingBottom: "4rem" }}>
         <h1 style={{ fontSize: "3.2rem", fontWeight: 800, color: "#1a1a1a", textAlign: "center", letterSpacing: "-0.01em", lineHeight: 1.1, maxWidth: 900, marginBottom: "2.2rem" }}>
           Guides that help you grow
         </h1>
@@ -389,7 +421,7 @@ const Guide = () => {
                       boxShadow: "0 2px 8px rgba(39,174,96,0.12)",
                       cursor: "pointer"
                     }}
-                    onClick={() => {/* handle book session */}}
+                    onClick={() => handleBookSession(DOCTORS[selected])}
                   >
                     Book a Session
                   </button>
@@ -410,6 +442,285 @@ const Guide = () => {
                     Close
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Date/Time Picker Modal */}
+        {showDateTimePicker && (
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 3000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backdropFilter: "blur(8px)"
+          }}
+            onClick={() => setShowDateTimePicker(false)}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 20,
+                padding: "30px",
+                maxWidth: "450px",
+                width: "90%",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                textAlign: "center"
+              }}
+              onClick={e => e.stopPropagation()}
+            >
+              <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1a1a1a", marginBottom: "20px" }}>
+                Book Session with {selectedDoctor?.name}
+              </h2>
+              
+              {/* Calendar Header */}
+              <div style={{ textAlign: "center", marginBottom: "15px" }}>
+                <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#333", marginBottom: "3px" }}>Select Date & Time</h3>
+                <p style={{ fontSize: "12px", color: "#666" }}>Choose a date and time that works for you</p>
+              </div>
+              
+              {/* Calendar Grid */}
+              <div style={{ marginBottom: "20px" }}>
+                <div style={{ 
+                  display: "grid", 
+                  gridTemplateColumns: "repeat(7, 1fr)", 
+                  gap: "2px", 
+                  marginBottom: "12px" 
+                }}>
+                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+                    <div key={`header-${index}`} style={{ 
+                      textAlign: "center", 
+                      fontSize: "10px", 
+                      fontWeight: 600, 
+                      color: "#666", 
+                      padding: "4px 2px" 
+                    }}>
+                      {day}
+                    </div>
+                  ))}
+                  {Array.from({ length: 35 }, (_, i) => {
+                    const day = i + 1;
+                    const isAvailable = day >= 15 && day <= 25;
+                    const isSelected = selectedDate && new Date(selectedDate).getDate() === day;
+                    return (
+                      <div
+                        key={`day-${day}`}
+                        onClick={() => {
+                          if (isAvailable) {
+                            const today = new Date();
+                            const selectedDay = new Date(today.getFullYear(), today.getMonth(), day);
+                            setSelectedDate(selectedDay.toISOString().split('T')[0]);
+                          }
+                        }}
+                        style={{
+                          textAlign: "center",
+                          padding: "4px 2px",
+                          borderRadius: "4px",
+                          cursor: isAvailable ? "pointer" : "default",
+                          transition: "all 0.2s",
+                          fontSize: "11px",
+                          fontWeight: 500,
+                          backgroundColor: isSelected ? "#27ae60" : "transparent",
+                          color: isSelected ? "#fff" : isAvailable ? "#333" : "#ccc",
+                          border: isSelected ? "none" : "1px solid transparent"
+                        }}
+                      >
+                        {day}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              {/* Time Slots */}
+              <div style={{ marginBottom: "20px" }}>
+                <h4 style={{ fontSize: "14px", fontWeight: 600, color: "#333", marginBottom: "8px", textAlign: "left" }}>
+                  Available Times
+                </h4>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "6px" }}>
+                  {['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'].map((time) => {
+                    const timeValue = time === '9:00 AM' ? '09:00' : 
+                                    time === '10:00 AM' ? '10:00' : 
+                                    time === '11:00 AM' ? '11:00' : 
+                                    time === '12:00 PM' ? '12:00' : 
+                                    time === '2:00 PM' ? '14:00' : 
+                                    time === '3:00 PM' ? '15:00' : 
+                                    time === '4:00 PM' ? '16:00' : '17:00';
+                    const isSelected = selectedTime === timeValue;
+                    return (
+                      <div
+                        key={time}
+                        onClick={() => setSelectedTime(timeValue)}
+                        style={{
+                          padding: "8px 6px",
+                          borderRadius: "6px",
+                          border: `2px solid ${isSelected ? "#27ae60" : "#e1e5e9"}`,
+                          cursor: "pointer",
+                          transition: "all 0.2s",
+                          fontSize: "12px",
+                          fontWeight: 500,
+                          backgroundColor: isSelected ? "#f0f9f0" : "transparent",
+                          color: isSelected ? "#27ae60" : "#333",
+                          textAlign: "center"
+                        }}
+                      >
+                        {time}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
+                <button
+                  onClick={() => setShowDateTimePicker(false)}
+                  style={{
+                    padding: "12px 24px",
+                    border: "2px solid #e1e5e9",
+                    background: "#fff",
+                    color: "#666",
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s"
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDateTimeConfirm}
+                  disabled={!selectedDate || !selectedTime}
+                  style={{
+                    padding: "12px 24px",
+                    border: "none",
+                    background: selectedDate && selectedTime ? "#27ae60" : "#ccc",
+                    color: "#fff",
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    cursor: selectedDate && selectedTime ? "pointer" : "not-allowed",
+                    transition: "all 0.2s"
+                  }}
+                >
+                  Continue to Payment
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Modal */}
+        {showPaymentModal && (
+          <div style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 3000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backdropFilter: "blur(8px)"
+          }}
+            onClick={() => setShowPaymentModal(false)}
+          >
+            <div
+              style={{
+                background: "#fff",
+                borderRadius: 20,
+                padding: "40px",
+                maxWidth: "500px",
+                width: "90%",
+                boxShadow: "0 20px 60px rgba(0,0,0,0.2)",
+                textAlign: "center"
+              }}
+              onClick={e => e.stopPropagation()}
+            >
+              <h2 style={{ fontSize: "28px", fontWeight: 700, color: "#1a1a1a", marginBottom: "20px" }}>
+                Complete Your Booking
+              </h2>
+              
+              <div style={{ 
+                background: "#f8f9fa", 
+                borderRadius: "12px", 
+                padding: "20px", 
+                marginBottom: "30px",
+                textAlign: "left"
+              }}>
+                <h3 style={{ fontSize: "18px", fontWeight: 600, color: "#333", marginBottom: "15px" }}>
+                  Session Details:
+                </h3>
+                <div style={{ fontSize: "16px", color: "#666", lineHeight: "1.6" }}>
+                  <p><strong>Doctor:</strong> {selectedDoctor?.name}</p>
+                  <p><strong>Date:</strong> {selectedDate}</p>
+                  <p><strong>Time:</strong> {selectedTime}</p>
+                  <p><strong>Duration:</strong> 30 minutes</p>
+                  <p><strong>Price:</strong> ₹100</p>
+                </div>
+              </div>
+
+              <div style={{ marginBottom: "30px" }}>
+                <h3 style={{ fontSize: "18px", fontWeight: 600, color: "#333", marginBottom: "15px" }}>
+                  Payment Method:
+                </h3>
+                <div style={{ 
+                  border: "2px solid #e1e5e9", 
+                  borderRadius: "12px", 
+                  padding: "15px",
+                  background: "#f8f9fa"
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <input type="radio" id="card" name="payment" defaultChecked style={{ transform: "scale(1.2)" }} />
+                    <label htmlFor="card" style={{ fontSize: "16px", color: "#333" }}>
+                      Credit/Debit Card
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
+                <button
+                  onClick={handlePaymentCancel}
+                  style={{
+                    padding: "12px 24px",
+                    border: "2px solid #e1e5e9",
+                    background: "#fff",
+                    color: "#666",
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s"
+                  }}
+                >
+                  Back
+                </button>
+                <button
+                  onClick={handlePaymentSuccess}
+                  style={{
+                    padding: "12px 24px",
+                    border: "none",
+                    background: "#27ae60",
+                    color: "#fff",
+                    borderRadius: "12px",
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    cursor: "pointer",
+                    transition: "all 0.2s"
+                  }}
+                >
+                  Pay ₹100
+                </button>
               </div>
             </div>
           </div>

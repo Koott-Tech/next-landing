@@ -357,7 +357,7 @@ const HeroSection = () => {
               z-index: 1;
             }
           `}</style>
-          <button className="hero-getstarted-btn">
+          <button className="hero-getstarted-btn" onClick={() => setShowOnboarding(true)}>
             <span>Get Started</span>
           </button>
         </div>
@@ -478,7 +478,7 @@ const HeroSection = () => {
         <button ref={loginBtnRef} className="cureminds-btn" onClick={() => window.open('https://mind-connect-therapy-hub.lovable.app', '_blank')}>
           <span>Login</span>
         </button>
-        <button ref={getStartedBtnRef} className="getstarted-btn" onClick={() => window.open('https://mind-connect-therapy-hub.lovable.app', '_blank')}>
+        <button ref={getStartedBtnRef} className="getstarted-btn" onClick={() => setShowOnboarding(true)}>
           <span>Get Started</span>
         </button>
       </div>

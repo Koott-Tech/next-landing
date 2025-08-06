@@ -128,7 +128,7 @@ const ChatTherapyPage = () => {
              Hey, we are glad you are here
            </h1>
            <p className="text-xl text-white/90 max-w-3xl mx-auto">
-             Let's get started
+             Let&apos;s get started
            </p>
          </div>
        </div>

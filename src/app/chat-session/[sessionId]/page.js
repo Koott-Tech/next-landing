@@ -606,7 +606,7 @@ const ChatSessionPage = () => {
            {showWelcome && (
              <div className="flex justify-center items-center h-full">
                <div className="text-center">
-                 <h1 className="text-3xl font-bold text-white mb-4">How are you? Let's talk!</h1>
+                 <h1 className="text-3xl font-bold text-white mb-4">How are you? Let&apos;s talk!</h1>
                  <p className="text-white/80 text-lg">Start typing to begin your conversation with {selectedDoctor?.name}</p>
                </div>
              </div>

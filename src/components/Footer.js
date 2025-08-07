@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Link from "next/link";
 
 const LANGUAGES = [
   "Hindi", "English", "Bengali", "Telugu", "Marathi", "Tamil", "Urdu", "Gujarati", "Kannada", "Odia", "Punjabi", "Malayalam", "Assamese"
@@ -12,7 +13,8 @@ const THERAPIES = [
 
 const INFO_LINKS = [
   { label: "About CureMinds", href: "#" },
-  { label: "About Us", href: "#" },
+  { label: "About Us", href: "/about" },
+  { label: "Blog", href: "/blog" },
   { label: "Careers", href: "#" },
   { label: "CureMinds In Media", href: "#" },
   { label: "For Therapists", href: "#" },
@@ -54,7 +56,17 @@ export default function Footer() {
           <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Information</h3>
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
             {INFO_LINKS.map(link => (
-              <li key={link.label}><a href={link.href} style={{ color: "#fff", textDecoration: "none", fontSize: 15, opacity: 0.85 }}>{link.label}</a></li>
+              <li key={link.label}>
+                {link.href.startsWith('/') ? (
+                  <Link href={link.href} style={{ color: "#333", textDecoration: "none", fontSize: 15, opacity: 0.85 }}>
+                    {link.label}
+                  </Link>
+                ) : (
+                  <a href={link.href} style={{ color: "#333", textDecoration: "none", fontSize: 15, opacity: 0.85 }}>
+                    {link.label}
+                  </a>
+                )}
+              </li>
             ))}
           </ul>
         </div>

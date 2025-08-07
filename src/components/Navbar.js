@@ -104,7 +104,7 @@ const Navbar = () => {
           border: "1px solid rgba(255,255,255,0.4)",
         }}
       >
-        <Link href="#about" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>About Us</Link>
+        <Link href="/about" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>About Us</Link>
         <Link href="/chat-therapy" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Chat Therapy</Link>
         <Link href="#therapist" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Therapist</Link>
       </nav>
@@ -119,7 +119,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div className="mobile-menu">
-        <Link href="#about" onClick={() => setIsMenuOpen(false)}>About Us</Link>
+        <Link href="/about" onClick={() => setIsMenuOpen(false)}>About Us</Link>
         <Link href="/chat-therapy" onClick={() => setIsMenuOpen(false)}>Chat Therapy</Link>
         <Link href="#therapist" onClick={() => setIsMenuOpen(false)}>Therapist</Link>
       </div>

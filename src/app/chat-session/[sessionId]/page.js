@@ -192,6 +192,19 @@ const ChatSessionPage = () => {
       const sessionDurationInSeconds = duration * 60;
       setRemainingTime(sessionDurationInSeconds); // Convert to seconds
       setCurrentTime(sessionDurationInSeconds);
+      
+      // Add initial welcome message from the therapist
+      const initialMessage = {
+        id: Date.now(),
+        text: `Hello! I'm ${doctor.name}. I'm here to support you during our ${duration}-minute session. How are you feeling today? Feel free to share anything that's on your mind.`,
+        sender: 'doctor',
+        timestamp: new Date().toISOString()
+      };
+      setMessages([initialMessage]);
+      
+      // Hide welcome message since we now have an initial message from the therapist
+      setShowWelcome(false);
+      
       console.log('Session initialized with duration:', duration, 'minutes =', sessionDurationInSeconds, 'seconds');
       setIsLoading(false);
     } catch (err) {
@@ -595,7 +608,7 @@ const ChatSessionPage = () => {
               onClick={handleEndSession}
               className="px-4 py-2 text-red-300 hover:text-red-200 font-medium transition-colors"
             >
-              End Session
+              End
             </button>
           </div>
         </div>

@@ -1,5 +1,11 @@
 @import "tailwindcss";
 
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+  }
+}
+
 /* Performance optimizations for smooth scrolling */
 * {
   box-sizing: border-box;

@@ -175,16 +175,27 @@ const ChatTherapyPage = () => {
                      </div>
                    </div>
 
-                                     {/* View Button */}
-                                        <button
-                       onClick={(e) => {
-                         e.stopPropagation();
-                         handleViewDoctor(doctor);
-                       }}
-                       className="px-6 py-2 bg-white/60 hover:bg-white/70 text-gray-800 rounded-lg transition-colors duration-200 border border-white/50"
-                     >
-                       View
-                     </button>
+                                     {/* Buttons */}
+                     <div className="flex space-x-3">
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleDoctorSelect(doctor);
+                         }}
+                         className="px-6 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors duration-200 font-semibold"
+                       >
+                         Start
+                       </button>
+                       <button
+                         onClick={(e) => {
+                           e.stopPropagation();
+                           handleViewDoctor(doctor);
+                         }}
+                         className="px-6 py-2 bg-white/60 hover:bg-white/70 text-gray-800 rounded-lg transition-colors duration-200 border border-white/50"
+                       >
+                         View
+                       </button>
+                     </div>
                 </div>
               </div>
 

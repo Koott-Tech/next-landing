@@ -327,7 +327,7 @@ const TherapistProfilePage = () => {
                     {openFAQ === 0 && (
                       <div className="px-4 pb-4">
                         <p className="text-gray-700 leading-relaxed text-sm">
-                          "I was drawn to psychology because I've always been fascinated by the human mind and behavior. Growing up, I noticed how people around me struggled with mental health issues but often didn't have access to proper support. This motivated me to pursue psychology as a way to help others understand themselves better and navigate life's challenges."
+                          &ldquo;I was drawn to psychology because I&apos;ve always been fascinated by the human mind and behavior. Growing up, I noticed how people around me struggled with mental health issues but often didn&apos;t have access to proper support. This motivated me to pursue psychology as a way to help others understand themselves better and navigate life&apos;s challenges.&rdquo;
                         </p>
                       </div>
                     )}
@@ -347,7 +347,7 @@ const TherapistProfilePage = () => {
                     {openFAQ === 1 && (
                       <div className="px-4 pb-4">
                         <p className="text-gray-700 leading-relaxed text-sm">
-                          "My approach is unique because I combine evidence-based therapeutic techniques with a deeply empathetic and personalized approach. I don't believe in one-size-fits-all therapy. Each person's journey is unique, so I adapt my methods to fit their specific needs and cultural background."
+                          &ldquo;My approach is unique because I combine evidence-based therapeutic techniques with a deeply empathetic and personalized approach. I don&apos;t believe in one-size-fits-all therapy. Each person&apos;s journey is unique, so I adapt my methods to fit their specific needs and cultural background.&rdquo;
                         </p>
                       </div>
                     )}
@@ -367,7 +367,7 @@ const TherapistProfilePage = () => {
                     {openFAQ === 2 && (
                       <div className="px-4 pb-4">
                         <p className="text-gray-700 leading-relaxed text-sm">
-                          "I understand that starting therapy can be intimidating. I always begin by building trust and explaining the process clearly. I encourage clients to ask questions and express their concerns openly. Many people worry about being judged, so I make sure they know this is a collaborative journey."
+                          &ldquo;I understand that starting therapy can be intimidating. I always begin by building trust and explaining the process clearly. I encourage clients to ask questions and express their concerns openly. Many people worry about being judged, so I make sure they know this is a collaborative journey.&rdquo;
                         </p>
                       </div>
                     )}
@@ -387,7 +387,7 @@ const TherapistProfilePage = () => {
                     {openFAQ === 3 && (
                       <div className="px-4 pb-4">
                         <p className="text-gray-700 leading-relaxed text-sm">
-                          "The therapeutic relationship is absolutely crucial. Research consistently shows that the connection between therapist and client is one of the strongest predictors of successful outcomes. Beyond that, I believe in the power of collaboration and client involvement."
+                          &ldquo;The therapeutic relationship is absolutely crucial. Research consistently shows that the connection between therapist and client is one of the strongest predictors of successful outcomes. Beyond that, I believe in the power of collaboration and client involvement.&rdquo;
                         </p>
                       </div>
                     )}
@@ -407,7 +407,7 @@ const TherapistProfilePage = () => {
                     {openFAQ === 4 && (
                       <div className="px-4 pb-4">
                         <p className="text-gray-700 leading-relaxed text-sm">
-                          "I'm committed to continuous learning and professional development. I regularly attend workshops, conferences, and training programs. I also stay current with the latest research through academic journals and professional networks."
+                          &ldquo;I&apos;m committed to continuous learning and professional development. I regularly attend workshops, conferences, and training programs. I also stay current with the latest research through academic journals and professional networks.&rdquo;
                         </p>
                       </div>
                     )}

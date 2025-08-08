@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import Image from 'next/image';
 import { PromptInputBox } from '../../../components/ui/ai-prompt-box';
 import TimeWarningModal from '../../../components/TimeWarningModal';
 import PaymentModal from '../../../components/PaymentModal';
@@ -587,9 +588,11 @@ const ChatSessionPage = () => {
         {/* Header */}
         <div className="flex items-center justify-between mb-6 p-4 bg-white/40 backdrop-blur-[80px] rounded-2xl border border-white/40 shadow-xl">
           <div className="flex items-center space-x-4">
-            <img
+            <Image
               src={selectedDoctor?.image}
               alt={selectedDoctor?.name}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full object-cover border-2 border-white/20"
             />
             <div>
@@ -633,9 +636,11 @@ const ChatSessionPage = () => {
              >
                {/* Doctor/User Image */}
                {message.sender === 'doctor' && (
-                 <img
+                 <Image
                    src={selectedDoctor?.image}
                    alt={selectedDoctor?.name}
+                   width={32}
+                   height={32}
                    className="w-8 h-8 rounded-full object-cover border-2 border-white/30 flex-shrink-0"
                  />
                )}
@@ -670,9 +675,11 @@ const ChatSessionPage = () => {
           
           {isTyping && !showWelcome && (
             <div className="flex items-center space-x-2 text-white/60">
-              <img
+              <Image
                 src={selectedDoctor?.image}
                 alt={selectedDoctor?.name}
+                width={32}
+                height={32}
                 className="w-8 h-8 rounded-full object-cover border-2 border-white/30"
               />
               <div className="flex space-x-1">

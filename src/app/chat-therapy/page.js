@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 import Footer from '../../components/Footer';
 
 const ChatTherapyPage = () => {
@@ -150,9 +151,11 @@ const ChatTherapyPage = () => {
                 <div className="flex items-center space-x-6">
                   {/* Doctor Image */}
                   <div className="relative">
-                    <img
+                    <Image
                       src={doctor.image}
                       alt={doctor.name}
+                      width={80}
+                      height={80}
                       className="w-20 h-20 rounded-full object-cover border-2 border-white/30"
                     />
                     {selectedDoctor?.id === doctor.id && (
@@ -295,9 +298,11 @@ const ChatTherapyPage = () => {
       
       {/* Clouds Image */}
       <div style={{ width: '100%', height: '250px', overflow: 'hidden', marginTop: '60px', marginBottom: '0' }}>
-        <img 
+        <Image 
           src="/clouds.jpg" 
           alt="Clouds" 
+          width={1200}
+          height={250}
           style={{ 
             width: '100%', 
             height: '100%', 

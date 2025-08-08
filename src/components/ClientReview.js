@@ -61,7 +61,7 @@ const ClientReview = () => {
     },
     {
       name: "James Wilson",
-      message: "I've tried many therapy platforms, but this one stands out. The quality of therapists and the user experience are unmatched.",
+              message: "I&apos;ve tried many therapy platforms, but this one stands out. The quality of therapists and the user experience are unmatched.",
       job: "Architect",
       video: "intro_1.mp4",
       image: "patient.jpg"

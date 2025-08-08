@@ -385,6 +385,39 @@ const Guide = () => {
               }}
               onClick={e => e.stopPropagation()}
             >
+              {/* Close X Button */}
+              <button
+                style={{
+                  position: "absolute",
+                  top: 20,
+                  right: 20,
+                  width: 40,
+                  height: 40,
+                  borderRadius: "50%",
+                  background: "rgba(255,255,255,0.9)",
+                  border: "2px solid #e1e5e9",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                  transition: "all 0.2s",
+                  zIndex: 20
+                }}
+                onClick={() => setSelected(null)}
+                onMouseEnter={(e) => {
+                  e.target.style.background = "rgba(255,255,255,1)";
+                  e.target.style.borderColor = "#ff6b6b";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = "rgba(255,255,255,0.9)";
+                  e.target.style.borderColor = "#e1e5e9";
+                }}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
               {/* Left: Video */}
               <div style={{ flex: 1.2, background: "#000", display: "flex", alignItems: "center", justifyContent: "center", height: "100%" }}>
                 <video
@@ -397,7 +430,7 @@ const Guide = () => {
                 />
               </div>
               {/* Right: Details */}
-              <div style={{ flex: 1, padding: 56, display: "flex", flexDirection: "column", justifyContent: "center", gap: 28 }}>
+              <div style={{ flex: 1, padding: 56, display: "flex", flexDirection: "column", justifyContent: "center", gap: 28, position: "relative" }}>
                 <h2 style={{ fontSize: 36, fontWeight: 700, marginBottom: 0 }}>{DOCTORS[selected].name}</h2>
                 <div style={{ display: "flex", gap: 16, marginBottom: 0 }}>
                   {DOCTORS[selected].expertise.map((exp, i) => (
@@ -408,18 +441,19 @@ const Guide = () => {
                 <div style={{ fontSize: 18, color: "#222" }}><b>Languages:</b> {DOCTORS[selected].languages.join(", ")}</div>
                 <div style={{ fontSize: 18, color: "#222" }}><b>Qualifications:</b> {DOCTORS[selected].qualifications}</div>
                 <div style={{ fontSize: 17, color: "#444", marginTop: -10, marginBottom: 8 }}><b>Bio:</b> {DOCTORS[selected].bio || "Dr. CureMinds is passionate about helping people achieve mental wellness through evidence-based therapy and compassionate guidance."}</div>
-                <div style={{ display: "flex", flexDirection: "row", gap: 18, justifyContent: "flex-end", alignItems: "center", marginTop: "auto" }}>
+                <div style={{ display: "flex", flexDirection: "row", gap: 12, justifyContent: "center", alignItems: "center", marginTop: "auto", marginBottom: 60 }}>
                   <button
                     style={{
                       background: "#27ae60",
                       color: "#fff",
                       border: "none",
-                      borderRadius: 24,
-                      padding: "14px 36px",
-                      fontSize: 20,
-                      fontWeight: 700,
+                      borderRadius: 20,
+                      padding: "10px 24px",
+                      fontSize: 16,
+                      fontWeight: 600,
                       boxShadow: "0 2px 8px rgba(39,174,96,0.12)",
-                      cursor: "pointer"
+                      cursor: "pointer",
+                      transition: "all 0.2s"
                     }}
                     onClick={() => handleBookSession(DOCTORS[selected])}
                   >
@@ -427,21 +461,97 @@ const Guide = () => {
                   </button>
                   <button
                     style={{
-                      background: "#fff",
+                      background: "#f8f9fa",
                       color: "#27ae60",
                       border: "2px solid #27ae60",
-                      borderRadius: 24,
-                      padding: "14px 36px",
-                      fontSize: 20,
-                      fontWeight: 700,
+                      borderRadius: 20,
+                      padding: "10px 24px",
+                      fontSize: 16,
+                      fontWeight: 600,
                       boxShadow: "0 2px 8px rgba(39,174,96,0.12)",
-                      cursor: "pointer"
+                      cursor: "pointer",
+                      transition: "all 0.2s"
                     }}
-                    onClick={() => setSelected(null)}
+                    onClick={() => {
+                      router.push(`/therapist-profile?doctor=${selected}`);
+                    }}
                   >
-                    Close
+                    View Profile
                   </button>
                 </div>
+                
+                {/* Navigation Arrows */}
+                <button
+                  style={{
+                    position: "absolute",
+                    bottom: 20,
+                    left: 20,
+                    width: 50,
+                    height: 50,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.9)",
+                    border: "2px solid #e1e5e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "all 0.2s",
+                    zIndex: 10
+                  }}
+                  onClick={() => {
+                    const prevIndex = selected === 0 ? DOCTORS.length - 1 : selected - 1;
+                    setSelected(prevIndex);
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "rgba(39,174,96,0.1)";
+                    e.target.style.borderColor = "#27ae60";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "rgba(255,255,255,0.9)";
+                    e.target.style.borderColor = "#e1e5e9";
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                  </svg>
+                </button>
+                
+                <button
+                  style={{
+                    position: "absolute",
+                    bottom: 20,
+                    right: 20,
+                    width: 50,
+                    height: 50,
+                    borderRadius: "50%",
+                    background: "rgba(255,255,255,0.9)",
+                    border: "2px solid #e1e5e9",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                    transition: "all 0.2s",
+                    zIndex: 10
+                  }}
+                  onClick={() => {
+                    const nextIndex = selected === DOCTORS.length - 1 ? 0 : selected + 1;
+                    setSelected(nextIndex);
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = "rgba(39,174,96,0.1)";
+                    e.target.style.borderColor = "#27ae60";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = "rgba(255,255,255,0.9)";
+                    e.target.style.borderColor = "#e1e5e9";
+                  }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2">
+                    <path d="M9 18l6-6-6-6"/>
+                  </svg>
+                </button>
               </div>
             </div>
           </div>

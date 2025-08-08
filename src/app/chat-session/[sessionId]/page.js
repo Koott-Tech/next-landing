@@ -196,7 +196,7 @@ const ChatSessionPage = () => {
       // Add initial welcome message from the therapist
       const initialMessage = {
         id: Date.now(),
-        text: `Hello! I'm ${doctor.name}. I'm here to support you during our ${duration}-minute session. How are you feeling today? Feel free to share anything that's on your mind.`,
+        text: `Hello! I&apos;m ${doctor.name}. I&apos;m here to support you during our ${duration}-minute session. How are you feeling today? Feel free to share anything that&apos;s on your mind.`,
         sender: 'doctor',
         timestamp: new Date().toISOString()
       };
@@ -274,7 +274,7 @@ const ChatSessionPage = () => {
       const doctorResponse = {
         id: Date.now() + 1,
         sender: 'doctor',
-        text: "Thank you for sharing that with me. I'm here to listen and help you work through this.",
+        text: "Thank you for sharing that with me. I&apos;m here to listen and help you work through this.",
         timestamp: new Date(),
         type: 'text'
       };

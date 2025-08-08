@@ -20,7 +20,7 @@ const Blog7 = ({
       id: "post-1",
       title: "Getting Started with shadcn/ui Components",
       summary:
-        "Learn how to quickly integrate and customize shadcn/ui components in your Next.js projects. We'll cover installation, theming, and best practices for building modern interfaces.",
+        "Learn how to quickly integrate and customize shadcn/ui components in your Next.js projects. We&apos;ll cover installation, theming, and best practices for building modern interfaces.",
       label: "Tutorial",
       author: "Sarah Chen",
       published: "1 Jan 2024",
@@ -31,7 +31,7 @@ const Blog7 = ({
       id: "post-2",
       title: "Building Accessible Web Applications",
       summary:
-        "Explore how to create inclusive web experiences using shadcn/ui's accessible components. Discover practical tips for implementing ARIA labels, keyboard navigation, and semantic HTML.",
+        "Explore how to create inclusive web experiences using shadcn/ui&apos;s accessible components. Discover practical tips for implementing ARIA labels, keyboard navigation, and semantic HTML.",
       label: "Accessibility",
       author: "Marcus Rodriguez",
       published: "1 Jan 2024",

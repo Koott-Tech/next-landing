@@ -71,7 +71,7 @@ const ChatScreen = ({ doctor, session, remainingTime, onTimeWarning, onEndSessio
         {
           id: 1,
           sender: 'doctor',
-          text: `Hello! I'm ${doctor.name}. I'm here to support you today. How are you feeling?`,
+          text: `Hello! I&apos;m ${doctor.name}. I&apos;m here to support you today. How are you feeling?`,
           timestamp: new Date(),
           type: 'text'
         }
@@ -100,7 +100,7 @@ const ChatScreen = ({ doctor, session, remainingTime, onTimeWarning, onEndSessio
       const doctorResponse = {
         id: Date.now() + 1,
         sender: 'doctor',
-        text: "Thank you for sharing that with me. I'm here to listen and help you work through this.",
+        text: "Thank you for sharing that with me. I&apos;m here to listen and help you work through this.",
         timestamp: new Date(),
         type: 'text'
       };

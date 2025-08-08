@@ -4,6 +4,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 // Custom hook for hover delay effect
 const useHoverDelay = (delayMs = 3000) => {
@@ -176,7 +177,7 @@ const TestimonialsColumn = ({ className, testimonials, duration = 15 }) => {
                 <div className="p-6 rounded-2xl border shadow-lg bg-white max-w-xs w-full" key={i}>
                   <div className="text-gray-700 text-sm leading-relaxed">{text}</div>
                   <div className="flex items-center gap-3 mt-4">
-                    <img
+                    <Image
                       width={40}
                       height={40}
                       src={image}
@@ -355,9 +356,11 @@ const IndividualTherapyPage = () => {
                    Get Started
                  </button>
                                  <div className="flex items-center space-x-4">
-                   <img 
+                   <Image 
                      src="/hippa.svg" 
                      alt="HIPAA Compliant" 
+                     width={32}
+                     height={32}
                      className="h-8 w-auto opacity-70"
                    />
                  </div>
@@ -367,11 +370,12 @@ const IndividualTherapyPage = () => {
         
                  {/* Right Side - Image */}
          <div className="flex-[1.5] relative">
-           <img 
-             src="/hero.jpg" 
-             alt="Individual Therapy" 
-             className="w-full h-full object-cover"
-           />
+                       <Image 
+              src="/hero.jpg" 
+              alt="Individual Therapy" 
+              fill
+              className="object-cover"
+            />
            {/* Growth Graph Overlay */}
            <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-lg" style={{ width: '280px', height: '200px' }}>
              <div className="flex items-center justify-between mb-4">
@@ -563,9 +567,11 @@ const IndividualTherapyPage = () => {
              {/* Left side - Illustration */}
              <div className="flex-1 flex items-center justify-center">
                <div className="w-64 h-64 bg-white rounded-lg shadow-lg p-6 border-2 border-gray-300">
-                 <img 
+                 <Image 
                    src="/irene.jpeg" 
                    alt="Person" 
+                   width={256}
+                   height={256}
                    className="w-full h-full object-cover rounded-lg"
                  />
                </div>
@@ -748,9 +754,11 @@ const IndividualTherapyPage = () => {
              {/* Right side - Illustration */}
              <div className="flex-1 flex items-center justify-center">
                <div className="w-64 h-64 bg-white rounded-lg shadow-lg p-6 border-2 border-gray-300">
-                 <img 
+                 <Image 
                    src="/patient.jpg" 
                    alt="Therapist" 
+                   width={256}
+                   height={256}
                    className="w-full h-full object-cover rounded-lg"
                  />
                </div>
@@ -767,9 +775,11 @@ const IndividualTherapyPage = () => {
                <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                  <div className="p-6">
                    <div className="flex items-center mb-4">
-                     <img 
+                     <Image 
                        src="/irene.jpeg" 
                        alt="Dr. Sarah Johnson" 
+                       width={64}
+                       height={64}
                        className="w-16 h-16 rounded-full object-cover mr-4"
                      />
                      <div>
@@ -791,9 +801,11 @@ const IndividualTherapyPage = () => {
                <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                  <div className="p-6">
                    <div className="flex items-center mb-4">
-                     <img 
+                     <Image 
                        src="/patient.jpg" 
                        alt="Dr. Michael Chen" 
+                       width={64}
+                       height={64}
                        className="w-16 h-16 rounded-full object-cover mr-4"
                      />
                      <div>
@@ -815,9 +827,11 @@ const IndividualTherapyPage = () => {
                <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
                  <div className="p-6">
                    <div className="flex items-center mb-4">
-                     <img 
+                     <Image 
                        src="/irene.jpeg" 
                        alt="Dr. Emily Rodriguez" 
+                       width={64}
+                       height={64}
                        className="w-16 h-16 rounded-full object-cover mr-4"
                      />
                      <div>
@@ -880,9 +894,11 @@ const IndividualTherapyPage = () => {
              {/* Right Section - Therapist Profile */}
              <div className="flex-1 flex flex-col items-center">
                <div className="relative">
-                 <img 
+                 <Image 
                    src={therapistData[currentTherapistIndex].image}
                    alt={therapistData[currentTherapistIndex].name}
+                   width={320}
+                   height={320}
                    className="w-80 h-80 rounded-lg object-cover shadow-lg transition-opacity duration-500"
                  />
                </div>
@@ -948,9 +964,11 @@ const IndividualTherapyPage = () => {
                
                {/* Illustration */}
                <div className="w-64 h-64 mx-auto lg:mx-0">
-                 <img 
+                 <Image 
                    src="/patient.jpg" 
                    alt="Therapy consultation" 
+                   width={256}
+                   height={256}
                    className="w-full h-full object-cover rounded-lg shadow-lg"
                  />
                </div>

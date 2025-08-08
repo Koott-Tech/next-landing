@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Footer from '@/components/Footer';
 
-
-const TherapistProfilePage = () => {
+// Separate component that uses useSearchParams
+const TherapistProfileContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const doctorIndex = searchParams.get('doctor');
@@ -544,6 +544,24 @@ const TherapistProfilePage = () => {
       <Footer />
     </div>
     
+  );
+};
+
+// Loading fallback component
+const TherapistProfileLoading = () => (
+  <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+    <div className="text-center">
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">Loading...</h1>
+    </div>
+  </div>
+);
+
+// Main component with Suspense boundary
+const TherapistProfilePage = () => {
+  return (
+    <Suspense fallback={<TherapistProfileLoading />}>
+      <TherapistProfileContent />
+    </Suspense>
   );
 };
 

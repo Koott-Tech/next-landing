@@ -160,7 +160,7 @@ const HeroSection = () => {
         ScrollTrigger.getAll().forEach(trigger => trigger.kill());
       };
     }
-  }, []);
+  }, [isMobile]);
 
   return (
     <div

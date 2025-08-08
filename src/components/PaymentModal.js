@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 const PaymentModal = ({ doctor, session, onSuccess, onClose, isExtension = false }) => {
   const [paymentMethod, setPaymentMethod] = useState('card');
@@ -37,9 +38,11 @@ const PaymentModal = ({ doctor, session, onSuccess, onClose, isExtension = false
         {/* Doctor Info */}
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center space-x-4">
-            <img
+            <Image
               src={doctor.image}
               alt={doctor.name}
+              width={64}
+              height={64}
               className="w-16 h-16 rounded-full object-cover"
             />
             <div>

@@ -3,6 +3,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Image from 'next/image';
 // Import throttle utility for better performance
 import { throttle } from '../utils/scrollUtils';
 
@@ -95,9 +96,11 @@ const HumanChatSection = () => {
 
           {/* Right side - Image */}
           <div className="flex-1 flex items-center justify-center">
-            <img
+            <Image
               src="/mob.png"
               alt="Mobile app interface"
+              width={400}
+              height={600}
               className="max-w-full h-auto max-h-[60vh] object-contain"
             />
           </div>

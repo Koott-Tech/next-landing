@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 const DoctorCard = ({ doctor, sessionOptions, onSessionSelect }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -9,9 +10,11 @@ const DoctorCard = ({ doctor, sessionOptions, onSessionSelect }) => {
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
       {/* Doctor Image and Basic Info */}
       <div className="relative">
-        <img
+        <Image
           src={doctor.image}
           alt={doctor.name}
+          width={400}
+          height={192}
           className="w-full h-48 object-cover"
         />
         <div className="absolute top-4 right-4 bg-white rounded-full px-3 py-1 shadow-md">

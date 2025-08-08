@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import HeroSection from '../components/HeroSection';
 import Text from '../components/Text';
 import TypesOfTherapy from '../components/TypesOfTherapy';
@@ -25,13 +26,12 @@ export default function Home() {
       <FormalFAQ />
       
       {/* Clouds Image */}
-      <div style={{ width: '100%', height: '250px', overflow: 'hidden', marginTop: '60px', marginBottom: '0' }}>
-        <img 
+      <div style={{ width: '100%', height: '250px', overflow: 'hidden', marginTop: '60px', marginBottom: '0', position: 'relative' }}>
+        <Image 
           src="/clouds.jpg" 
           alt="Clouds" 
+          fill
           style={{ 
-            width: '100%', 
-            height: '100%', 
             objectFit: 'cover',
             objectPosition: 'center'
           }} 

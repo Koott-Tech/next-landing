@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const OptimizedImage = ({ 
   src, 
@@ -37,7 +38,7 @@ const OptimizedImage = ({
   };
 
   return (
-    <img
+    <Image
       ref={imgRef}
       src={isInView ? src : placeholder}
       alt={alt}
@@ -48,7 +49,8 @@ const OptimizedImage = ({
         transition: 'opacity 0.3s ease-in-out',
       }}
       onLoad={handleLoad}
-      loading="lazy"
+      width={400}
+      height={300}
       {...props}
     />
   );

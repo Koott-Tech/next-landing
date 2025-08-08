@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from "react";
+import Image from 'next/image';
 
 const ClientReview = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -219,11 +220,10 @@ const ClientReview = () => {
                     preload="metadata"
                   />
                 ) : (
-                  <img
+                  <Image
                     src={"/" + review.image}
+                    fill
                     style={{
-                      width: "100%",
-                      height: "100%",
                       objectFit: "cover",
                       position: "absolute",
                       top: 0,
@@ -231,7 +231,6 @@ const ClientReview = () => {
                       zIndex: 1
                     }}
                     alt={review.name}
-                    loading="lazy"
                   />
                 )}
                 
@@ -345,11 +344,10 @@ const ClientReview = () => {
                     preload="metadata"
                   />
                 ) : (
-                  <img
+                  <Image
                     src={"/" + review.image}
+                    fill
                     style={{
-                      width: "100%",
-                      height: "100%",
                       objectFit: "cover",
                       position: "absolute",
                       top: 0,
@@ -357,7 +355,6 @@ const ClientReview = () => {
                       zIndex: 1
                     }}
                     alt={review.name}
-                    loading="lazy"
                   />
                 )}
                 

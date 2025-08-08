@@ -8,7 +8,17 @@ import OnboardingModal from './OnboardingModal';
 
 const PickYourGuide = () => {
   const sectionRef = useRef(null);
-  const cardRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
+  const cardRef1 = useRef(null);
+  const cardRef2 = useRef(null);
+  const cardRef3 = useRef(null);
+  const cardRef4 = useRef(null);
+  const cardRef5 = useRef(null);
+  const cardRef6 = useRef(null);
+  
+  const cardRefs = React.useMemo(() => [
+    cardRef1, cardRef2, cardRef3, cardRef4, cardRef5, cardRef6
+  ], []);
+  
   const router = useRouter();
   const [showOnboarding, setShowOnboarding] = React.useState(false);
 

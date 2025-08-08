@@ -2,7 +2,56 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
 import Footer from '@/components/Footer';
+
+// Doctors data - moved outside component to prevent recreation on every render
+const DOCTORS = [
+  {
+    name: "Dr. Irene Cheriyan",
+    title: "Senior Consultant Psychologist",
+    expertise: ["Anxiety", "CBT", "Mindfulness"],
+    experience: 12,
+    languages: ["English", "Malayalam", "Hindi"],
+    qualifications: "PhD in Clinical Psychology, University of Mumbai. Certified CBT Practitioner.",
+    bio: "Dr. Irene Cheriyan is a passionate psychologist dedicated to helping individuals overcome anxiety and improve their mental wellness through evidence-based therapy.",
+    pricing: "₹1600 for 50 mins",
+    image: "/irene.jpeg"
+  },
+  {
+    name: "Dr. Rahul Menon",
+    title: "Senior Consultant Psychologist",
+    expertise: ["Depression", "Adolescents", "Family Therapy"],
+    experience: 9,
+    languages: ["English", "Tamil"],
+    qualifications: "M.Phil in Psychiatry, NIMHANS. Family Therapy Certification.",
+    bio: "Dr. Rahul Menon specializes in treating depression and adolescents. He is certified in family therapy and dedicated to helping families navigate through difficult times.",
+    pricing: "₹1400 for 50 mins",
+    image: "/patient.jpg"
+  },
+  {
+    name: "Dr. Priya Nair",
+    title: "Senior Consultant Psychologist",
+    expertise: ["Stress", "Relationships", "Trauma"],
+    experience: 7,
+    languages: ["English", "Hindi", "Kannada"],
+    qualifications: "MSc in Counseling Psychology, Christ University. Trauma Specialist.",
+    bio: "Dr. Priya Nair is a trauma specialist with expertise in helping individuals cope with stress and improve their relationships.",
+    pricing: "₹1200 for 50 mins",
+    image: "/irene.jpeg"
+  },
+  {
+    name: "Dr. Arjun Sinha",
+    title: "Senior Consultant Psychologist",
+    expertise: ["Sleep", "Addiction", "Self-Esteem"],
+    experience: 15,
+    languages: ["English", "Bengali", "Hindi"],
+    qualifications: "PhD in Psychology, Jadavpur University. Addiction Recovery Expert.",
+    bio: "Dr. Arjun Sinha specializes in addiction recovery and self-esteem. He is dedicated to helping individuals overcome addiction and improve their self-esteem.",
+    pricing: "₹1800 for 50 mins",
+    image: "/patient.jpg"
+  }
+];
 
 // Separate component that uses useSearchParams
 const TherapistProfileContent = () => {
@@ -17,53 +66,6 @@ const TherapistProfileContent = () => {
   
   // FAQ state
   const [openFAQ, setOpenFAQ] = useState(null);
-  
-  const DOCTORS = [
-    {
-      name: "Dr. Irene Cheriyan",
-      title: "Senior Consultant Psychologist",
-      expertise: ["Anxiety", "CBT", "Mindfulness"],
-      experience: 12,
-      languages: ["English", "Malayalam", "Hindi"],
-      qualifications: "PhD in Clinical Psychology, University of Mumbai. Certified CBT Practitioner.",
-      bio: "Dr. Irene Cheriyan is a passionate psychologist dedicated to helping individuals overcome anxiety and improve their mental wellness through evidence-based therapy.",
-      pricing: "₹1600 for 50 mins",
-      image: "/irene.jpeg"
-    },
-    {
-      name: "Dr. Rahul Menon",
-      title: "Senior Consultant Psychologist",
-      expertise: ["Depression", "Adolescents", "Family Therapy"],
-      experience: 9,
-      languages: ["English", "Tamil"],
-      qualifications: "M.Phil in Psychiatry, NIMHANS. Family Therapy Certification.",
-      bio: "Dr. Rahul Menon specializes in treating depression and adolescents. He is certified in family therapy and dedicated to helping families navigate through difficult times.",
-      pricing: "₹1400 for 50 mins",
-      image: "/patient.jpg"
-    },
-    {
-      name: "Dr. Priya Nair",
-      title: "Senior Consultant Psychologist",
-      expertise: ["Stress", "Relationships", "Trauma"],
-      experience: 7,
-      languages: ["English", "Hindi", "Kannada"],
-      qualifications: "MSc in Counseling Psychology, Christ University. Trauma Specialist.",
-      bio: "Dr. Priya Nair is a trauma specialist with expertise in helping individuals cope with stress and improve their relationships.",
-      pricing: "₹1200 for 50 mins",
-      image: "/irene.jpeg"
-    },
-    {
-      name: "Dr. Arjun Sinha",
-      title: "Senior Consultant Psychologist",
-      expertise: ["Sleep", "Addiction", "Self-Esteem"],
-      experience: 15,
-      languages: ["English", "Bengali", "Hindi"],
-      qualifications: "PhD in Psychology, Jadavpur University. Addiction Recovery Expert.",
-      bio: "Dr. Arjun Sinha specializes in addiction recovery and self-esteem. He is dedicated to helping individuals overcome addiction and improve their self-esteem.",
-      pricing: "₹1800 for 50 mins",
-      image: "/patient.jpg"
-    }
-  ];
 
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
@@ -160,9 +162,11 @@ const TherapistProfileContent = () => {
           <div className="flex justify-start -mt-56 mb-8 ml-32">
             <div className="relative">
               <div className="w-80 h-80 rounded-full overflow-hidden border-4 border-pink-100 relative bg-white">
-                <img 
+                <Image 
                   src={selectedDoctor.image} 
                   alt={selectedDoctor.name}
+                  width={320}
+                  height={320}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -379,7 +383,7 @@ const TherapistProfileContent = () => {
                       onClick={() => toggleFAQ(3)}
                       className="w-full flex items-center justify-between p-4 text-left hover:bg-gray-50 transition-colors"
                     >
-                      <span className="font-medium text-gray-800">What's most important in successful therapy?</span>
+                      <span className="font-medium text-gray-800">What&apos;s most important in successful therapy?</span>
                       <span className="text-gray-500 text-xl font-bold">
                         {openFAQ === 3 ? '−' : '+'}
                       </span>

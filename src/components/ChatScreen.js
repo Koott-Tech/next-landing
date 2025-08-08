@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import ChatMessage from './ChatMessage';
 import Timer from './Timer';
 
@@ -162,9 +163,11 @@ const ChatScreen = ({ doctor, session, remainingTime, onTimeWarning, onEndSessio
       <div className="bg-white shadow-sm border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <img
+            <Image
               src={doctor.image}
               alt={doctor.name}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full object-cover"
             />
             <div>

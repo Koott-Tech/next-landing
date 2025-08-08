@@ -2,6 +2,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
 import { gsap } from "gsap";
+import Image from 'next/image';
 import OnboardingModal from './OnboardingModal';
 import { useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';
@@ -361,18 +362,22 @@ const TypesOfTherapy = () => {
                 >
                   Hi Doctor, I&apos;m feeling anxious lately. What should I do?
                 </div>
-                <img
+                <Image
                   src={"/patient.jpg"}
                   alt="Patient"
-                  style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
                 />
               </div>
               {/* Doctor message */}
               <div className="gap-8" style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
-                <img
+                <Image
                   src={"/irene.jpeg"}
                   alt="Doctor"
-                  style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
                 />
                 <div
                   className="chat-bubble"
@@ -405,18 +410,22 @@ const TypesOfTherapy = () => {
                 >
                   Thank you, that would be helpful!
                 </div>
-                <img
+                <Image
                   src={"/patient.jpg"}
                   alt="Patient"
-                  style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
                 />
               </div>
               {/* Doctor voice message with animation */}
               <div style={{ display: "flex", alignItems: "flex-end", gap: 8 }}>
-                <img
+                <Image
                   src={"/irene.jpeg"}
                   alt="Doctor"
-                  style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
                 />
                 <div
                   style={{
@@ -465,10 +474,12 @@ const TypesOfTherapy = () => {
                 >
                   <span role="img" aria-label="happy">😊</span>
                 </div>
-                <img
+                <Image
                   src={"/patient.jpg"}
                   alt="Patient"
-                  style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: "50%", objectFit: "cover", border: "2px solid #e0e7ef" }}
                 />
               </div>
             </div>

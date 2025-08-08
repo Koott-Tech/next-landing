@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 
 const ChatMessage = ({ message, doctor }) => {
   const isDoctor = message.sender === 'doctor';
@@ -20,9 +21,11 @@ const ChatMessage = ({ message, doctor }) => {
       case 'image':
         return (
           <div className="max-w-xs">
-            <img
+            <Image
               src={URL.createObjectURL(message.file)}
               alt="Shared image"
+              width={320}
+              height={240}
               className="rounded-lg max-w-full h-auto"
             />
           </div>
@@ -89,9 +92,11 @@ const ChatMessage = ({ message, doctor }) => {
       
       {isDoctor && (
         <div className="order-2 ml-3">
-          <img
+          <Image
             src={doctor.image}
             alt={doctor.name}
+            width={32}
+            height={32}
             className="w-8 h-8 rounded-full object-cover"
           />
         </div>

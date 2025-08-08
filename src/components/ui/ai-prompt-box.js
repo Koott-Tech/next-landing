@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Image from 'next/image';
 import { ArrowUp, Paperclip, Square, X, StopCircle, Mic } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -234,7 +235,7 @@ export const PromptInputBox = React.forwardRef((props, ref) => {
     const files = Array.from(e.dataTransfer.files);
     const imageFiles = files.filter((file) => isImageFile(file));
     if (imageFiles.length > 0) processFile(imageFiles[0]);
-  }, []);
+  }, [processFile]);
 
   const handleRemoveFile = (index) => {
     const fileToRemove = files[index];
@@ -255,7 +256,7 @@ export const PromptInputBox = React.forwardRef((props, ref) => {
         }
       }
     }
-  }, []);
+  }, [processFile]);
 
   React.useEffect(() => {
     document.addEventListener("paste", handlePaste);
@@ -319,9 +320,11 @@ export const PromptInputBox = React.forwardRef((props, ref) => {
                 <div
                   className="w-16 h-16 rounded-xl overflow-hidden cursor-pointer transition-all duration-300"
                 >
-                  <img
+                  <Image
                     src={filePreviews[file.name]}
                     alt={file.name}
+                    width={64}
+                    height={64}
                     className="h-full w-full object-cover"
                   />
                   <button

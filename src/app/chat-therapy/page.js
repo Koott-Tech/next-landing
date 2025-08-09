@@ -311,8 +311,7 @@ const ChatTherapyPage = () => {
         />
       </div>
       
-      {/* Footer */}
-      <Footer />
+      {/* Footer is rendered globally in RootLayout */}
     </div>
   );
 };

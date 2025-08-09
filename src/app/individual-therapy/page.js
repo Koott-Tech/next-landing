@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
@@ -200,6 +201,31 @@ const TestimonialsColumn = ({ className, testimonials, duration = 15 }) => {
 };
 
 const IndividualTherapyPage = () => {
+  const pathname = usePathname();
+  const serviceKey = (() => {
+    if (!pathname) return 'individual';
+    if (pathname.includes('/services/couple')) return 'couple';
+    if (pathname.includes('/services/family')) return 'family';
+    if (pathname.includes('/services/children')) return 'children';
+    if (pathname.includes('/services/team')) return 'team';
+    if (pathname.includes('/services/senior-citizens')) return 'senior-citizens';
+    if (pathname.includes('/services/therapist')) return 'therapist';
+    return 'individual';
+  })();
+  const serviceNames = {
+    individual: 'Individual',
+    couple: 'Couples',
+    family: 'Family',
+    children: 'Children',
+    team: 'Team',
+    'senior-citizens': 'Senior Citizens',
+    therapist: 'Therapist',
+  };
+  const serviceDisplayName = serviceNames[serviceKey] || 'Individual';
+  const heroHeading =
+    serviceKey === 'individual'
+      ? 'Online therapy with a licensed therapist'
+      : `Online ${serviceDisplayName.toLowerCase()} therapy with a licensed therapist`;
   const targetRef = useRef(null);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -260,23 +286,129 @@ const IndividualTherapyPage = () => {
   const textPhrases = ["Choose", "Book", "Start"];
   
   // Card data for animation
-  const cardData = [
-    {
-      title: "Choose Your Therapist",
-      description: "Browse through our qualified therapists and select the one that best fits your needs and preferences.",
-      image: "/irene.jpeg"
-    },
-    {
-      title: "Book Your Session",
-      description: "Schedule your therapy session at a time that works for you, with flexible options available.",
-      image: "/patient.jpg"
-    },
-    {
-      title: "Start Your Journey",
-      description: "Begin your therapy session in a safe, confidential environment designed for your healing.",
-      image: "/irene.jpeg"
-    }
-  ];
+  const cardContentByService = {
+    individual: [
+      {
+        title: 'Choose Your Therapist',
+        description:
+          'Browse through our qualified therapists and select the one that best fits your needs and preferences.',
+      },
+      {
+        title: 'Book Your Session',
+        description:
+          'Schedule your therapy session at a time that works for you, with flexible options available.',
+      },
+      {
+        title: 'Start Your Journey',
+        description:
+          'Begin your therapy session in a safe, confidential environment designed for your healing.',
+      },
+    ],
+    couple: [
+      {
+        title: 'Choose Your Couples Therapist',
+        description:
+          'Find a therapist who specializes in relationship counseling and communication skills.',
+      },
+      {
+        title: 'Set Shared Goals',
+        description:
+          'Define focus areas such as conflict resolution, trust rebuilding, or intimacy.',
+      },
+      {
+        title: 'Build Stronger Connection',
+        description:
+          'Learn evidence-based techniques to strengthen understanding and partnership.',
+      },
+    ],
+    family: [
+      {
+        title: 'Select a Family Therapist',
+        description:
+          'Choose experts in family dynamics and intergenerational communication.',
+      },
+      {
+        title: 'Align as a Family',
+        description:
+          'Work on boundaries, roles, and routines that support a healthy home life.',
+      },
+      {
+        title: 'Grow Together',
+        description:
+          'Develop tools for constructive conversations and sustainable harmony.',
+      },
+    ],
+    children: [
+      {
+        title: 'Pick a Child Specialist',
+        description:
+          'Therapists experienced with age-appropriate approaches and play therapy.',
+      },
+      {
+        title: 'Support Development',
+        description:
+          'Address behavior, learning, and emotional regulation with proven methods.',
+      },
+      {
+        title: 'Empower Parents',
+        description:
+          'Get guidance to reinforce progress at home and school.',
+      },
+    ],
+    team: [
+      {
+        title: 'Select a Workplace Coach',
+        description:
+          'Specialists in team wellbeing, burnout prevention, and resilience.',
+      },
+      {
+        title: 'Align Objectives',
+        description:
+          'Define goals like collaboration, communication, and psychological safety.',
+      },
+      {
+        title: 'Thrive as a Team',
+        description:
+          'Implement rituals and feedback loops that sustain healthy performance.',
+      },
+    ],
+    'senior-citizens': [
+      {
+        title: 'Choose a Geriatric Specialist',
+        description:
+          'Therapists skilled in life transitions, grief, and chronic health support.',
+      },
+      {
+        title: 'Maintain Quality of Life',
+        description:
+          'Enhance independence, purpose, and social connection.',
+      },
+      {
+        title: 'Compassionate Care',
+        description:
+          'Accessible, respectful support for seniors and their families.',
+      },
+    ],
+    therapist: [
+      {
+        title: 'Join Our Network',
+        description:
+          'Find supervision, peer support, and a steady stream of matched clients.',
+      },
+      {
+        title: 'Grow Your Practice',
+        description:
+          'Tools for scheduling, outcomes tracking, and ethical best practices.',
+      },
+      {
+        title: 'Deliver Impact',
+        description:
+          'Focus on care while we handle operations and technology.',
+      },
+    ],
+  };
+
+  const cardData = cardContentByService[serviceKey] || cardContentByService.individual;
   
   useEffect(() => {
     if (typeof window === 'undefined' || !targetRef.current) return;
@@ -335,7 +467,7 @@ const IndividualTherapyPage = () => {
          <div className="flex-1 flex items-center px-8 lg:px-16" style={{ backgroundColor: '#9deab2' }}>
                      <div className="max-w-6xl">
                          <h1 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight" style={{ color: '#005c65' }}>
-               Online therapy with a licensed therapist
+               {heroHeading}
              </h1>
                          <ul className="space-y-4 text-lg text-gray-700 mb-8">
                <li className="flex items-start">
@@ -372,7 +504,7 @@ const IndividualTherapyPage = () => {
          <div className="flex-[1.5] relative">
                        <Image 
               src="/hero.jpg" 
-              alt="Individual Therapy" 
+              alt={`${serviceDisplayName} Therapy`} 
               fill
               className="object-cover"
             />
@@ -497,9 +629,21 @@ const IndividualTherapyPage = () => {
              <div className="flex-1 flex flex-col items-start justify-center text-left ml-16">
                {/* Animated Heading */}
                <div className="mb-6">
-                 <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-                   {textPhrases[currentTextIndex]}
-                 </div>
+                  <div className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
+                    {serviceKey === 'couple'
+                      ? ['Connect', 'Communicate', 'Grow'][currentTextIndex] || 'Connect'
+                      : serviceKey === 'family'
+                      ? ['Listen', 'Support', 'Unite'][currentTextIndex] || 'Listen'
+                      : serviceKey === 'children'
+                      ? ['Play', 'Learn', 'Bloom'][currentTextIndex] || 'Play'
+                      : serviceKey === 'team'
+                      ? ['Align', 'Collaborate', 'Perform'][currentTextIndex] || 'Align'
+                      : serviceKey === 'senior-citizens'
+                      ? ['Care', 'Purpose', 'Dignity'][currentTextIndex] || 'Care'
+                      : serviceKey === 'therapist'
+                      ? ['Join', 'Grow', 'Impact'][currentTextIndex] || 'Join'
+                      : textPhrases[currentTextIndex]}
+                  </div>
                </div>
                
 
@@ -558,7 +702,7 @@ const IndividualTherapyPage = () => {
            {/* Centered Heading */}
            <div className="text-center max-w-4xl mx-auto mb-12">
              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-8">
-               Find a licensed therapist near you
+               {`Find a licensed ${serviceDisplayName.toLowerCase()} therapist near you`}
              </h2>
            </div>
            
@@ -766,13 +910,13 @@ const IndividualTherapyPage = () => {
            </div>
 
            {/* Available Doctors Section */}
-           <div className="max-w-7xl mx-auto">
+           <div className="max-w-[1600px] mx-auto px-4 lg:px-8">
              <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-8">
                Available Therapists
              </h3>
-             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-6 justify-items-center">
                {/* Doctor Card 1 */}
-               <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white px-15 rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full mx-auto" >
                  <div className="p-6">
                    <div className="flex items-center mb-4">
                      <Image 
@@ -798,7 +942,7 @@ const IndividualTherapyPage = () => {
                </div>
 
                {/* Doctor Card 2 */}
-               <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full mx-auto" style={{ maxWidth: '600px' }}>
                  <div className="p-6">
                    <div className="flex items-center mb-4">
                      <Image 
@@ -824,7 +968,7 @@ const IndividualTherapyPage = () => {
                </div>
 
                {/* Doctor Card 3 */}
-               <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full mx-auto" style={{ maxWidth: '600px' }}>
                  <div className="p-6">
                    <div className="flex items-center mb-4">
                      <Image 

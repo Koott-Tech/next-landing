@@ -34,35 +34,60 @@ const EXPERTS = [
 
 export default function Footer() {
   return (
-    <footer style={{ background: "#f8f9fa", color: "#333", padding: "3.5rem 0 2.2rem 0", marginTop: 0 }}>
-      <div style={{ maxWidth: 1300, margin: "0 auto", padding: "0 32px", display: "flex", flexWrap: "wrap", gap: 48, justifyContent: "space-between" }}>
-        <div style={{ minWidth: 220, flex: 1 }}>
-          <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Languages of India</h3>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: 10 }}>
-            {LANGUAGES.map(lang => (
-              <li key={lang} style={{ background: "#e9ecef", color: "#333", borderRadius: 10, padding: "6px 16px", fontSize: 15, marginBottom: 6 }}>{lang}</li>
+    <footer
+      style={{
+        background: "transparent",
+        color: "#515154",
+        padding: "40px 0 24px 0",
+        marginTop: 0,
+        borderTop: "1px solid #e5e7eb",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1300,
+          margin: "0 auto",
+          padding: "0 32px",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 32,
+        }}
+      >
+        <div>
+          <h3 style={{ color: "#1f2937", fontWeight: 700, fontSize: 16, marginBottom: 12 }}>Languages of India</h3>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, columns: 2, columnGap: 24 }}>
+            {LANGUAGES.map((lang) => (
+              <li key={lang} style={{ breakInside: "avoid", marginBottom: 6, fontSize: 14 }}>{lang}</li>
             ))}
           </ul>
         </div>
-        <div style={{ minWidth: 220, flex: 1 }}>
-          <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Types of Therapies</h3>
-          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexWrap: "wrap", gap: 10 }}>
-            {THERAPIES.map(therapy => (
-              <li key={therapy} style={{ background: "#e9ecef", color: "#333", borderRadius: 10, padding: "6px 16px", fontSize: 15, marginBottom: 6 }}>{therapy}</li>
+
+        <div>
+          <h3 style={{ color: "#1f2937", fontWeight: 700, fontSize: 16, marginBottom: 12 }}>Types of Therapies</h3>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, columns: 2, columnGap: 24 }}>
+            {THERAPIES.map((therapy) => (
+              <li key={therapy} style={{ breakInside: "avoid", marginBottom: 6, fontSize: 14 }}>{therapy}</li>
             ))}
           </ul>
         </div>
-        <div style={{ minWidth: 220, flex: 1 }}>
-          <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Information</h3>
+
+        <div>
+          <h3 style={{ color: "#1f2937", fontWeight: 700, fontSize: 16, marginBottom: 12 }}>Information</h3>
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-            {INFO_LINKS.map(link => (
+            {INFO_LINKS.map((link) => (
               <li key={link.label}>
                 {link.href.startsWith('/') ? (
-                  <Link href={link.href} style={{ color: "#333", textDecoration: "none", fontSize: 15, opacity: 0.85 }}>
+                  <Link
+                    href={link.href}
+                    style={{ color: "#515154", textDecoration: "none", fontSize: 14 }}
+                  >
                     {link.label}
                   </Link>
                 ) : (
-                  <a href={link.href} style={{ color: "#333", textDecoration: "none", fontSize: 15, opacity: 0.85 }}>
+                  <a
+                    href={link.href}
+                    style={{ color: "#515154", textDecoration: "none", fontSize: 14 }}
+                  >
                     {link.label}
                   </a>
                 )}
@@ -70,16 +95,17 @@ export default function Footer() {
             ))}
           </ul>
         </div>
-        <div style={{ minWidth: 220, flex: 1 }}>
-          <h3 style={{ color: "#27ae60", fontWeight: 800, fontSize: 22, marginBottom: 18 }}>Experts</h3>
+
+        <div>
+          <h3 style={{ color: "#1f2937", fontWeight: 700, fontSize: 16, marginBottom: 12 }}>Experts</h3>
           <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 8 }}>
-            {EXPERTS.map(expert => (
-              <li key={expert} style={{ fontSize: 15 }}>{expert}</li>
+            {EXPERTS.map((expert) => (
+              <li key={expert} style={{ fontSize: 14 }}>{expert}</li>
             ))}
           </ul>
         </div>
       </div>
-      <div style={{ textAlign: "center", color: "#aaa", fontSize: 14, marginTop: 38, opacity: 0.7 }}>
+      <div style={{ textAlign: "center", color: "#6b7280", fontSize: 12, marginTop: 28 }}>
         &copy; {new Date().getFullYear()} CureMinds. All rights reserved.
       </div>
     </footer>

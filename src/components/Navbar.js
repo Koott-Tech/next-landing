@@ -2,18 +2,77 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
+import { LoadingContext } from "./LoadingProvider";
+import Image from "next/image";
+
+const NAV_MEGA = [
+  {
+    title: "Experts",
+    items: [
+      "Psychologist",
+      "Clinical Psychologist",
+      "Child Psychologist",
+      "Health Psychologist",
+      "Psychiatrist",
+    ],
+  },
+  {
+    title: "Services",
+    items: [
+      { label: "Individual", href: "/services/individual" },
+      { label: "Couple", href: "/services/couple" },
+      { label: "Family", href: "/services/family" },
+      { label: "Children", href: "/services/children" },
+      { label: "Team", href: "/services/team" },
+      { label: "Senior Citizens", href: "/services/senior-citizens" },
+      { label: "Therapist", href: "/services/therapist" },
+    ],
+  },
+  {
+    title: "Get treatment for",
+    items: [
+      "Anxiety",
+      "Depression",
+      "ADHD",
+      "Bipolar",
+      "OCD",
+      "Insomnia",
+      "Postpartum Depression",
+      "Panic Disorder",
+    ],
+  },
+  {
+    title: "Company",
+    items: ["Careers", "About Us", "Advisory Board"],
+  },
+];
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isForYouOpen, setIsForYouOpen] = useState(false);
+  const [isForYouOpen, setIsForYouOpen] = useState(false); // visual open state (animates)
+  const [isForYouMounted, setIsForYouMounted] = useState(false); // mounted for fade-out
+  const ANIMATION_MS = 250;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const toggleForYou = () => {
-    setIsForYouOpen(!isForYouOpen);
+    if (isForYouOpen) {
+      // start fade-out then unmount
+      setIsForYouOpen(false);
+      setTimeout(() => setIsForYouMounted(false), ANIMATION_MS);
+    } else {
+      // mount then fade-in on next tick
+      setIsForYouMounted(true);
+      setTimeout(() => setIsForYouOpen(true), 10);
+    }
   };
+
+  const router = useRouter();
+  const { startLoading } = useContext(LoadingContext);
 
   return (
     <>
@@ -140,8 +199,18 @@ const Navbar = () => {
             <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <Link href="/chat-therapy" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Chat Therapy</Link>
-        <Link href="#therapist" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Therapist</Link>
+          <Link
+            href="/chat-therapy"
+            onClick={(e) => {
+              e.preventDefault();
+              startLoading();
+              router.push("/chat-therapy");
+            }}
+            style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}
+          >
+            Chat Therapy
+          </Link>
+          <Link href="#therapist" style={{ textDecoration: "none", color: "#222", fontWeight: 600, fontSize: "1.25rem" }}>Therapist</Link>
       </nav>
 
       {/* Mobile Menu Button */}
@@ -187,12 +256,22 @@ const Navbar = () => {
             <path d="M6 9l6 6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <Link href="/chat-therapy" onClick={() => setIsMenuOpen(false)}>Chat Therapy</Link>
+        <Link
+          href="/chat-therapy"
+          onClick={(e) => {
+            e.preventDefault();
+            setIsMenuOpen(false);
+            startLoading();
+            router.push("/chat-therapy");
+          }}
+        >
+          Chat Therapy
+        </Link>
         <Link href="#therapist" onClick={() => setIsMenuOpen(false)}>Therapist</Link>
       </div>
 
-      {/* For You Dropdown Overlay */}
-      {isForYouOpen && (
+      {/* For You Dropdown Overlay with smooth fade in/out */}
+      {isForYouMounted && (
         <div 
           style={{
             position: "fixed",
@@ -204,7 +283,10 @@ const Navbar = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "flex-start",
-            paddingTop: "6rem"
+            paddingTop: "8rem",
+            opacity: isForYouOpen ? 1 : 0,
+            transition: `opacity ${ANIMATION_MS}ms ease` ,
+            pointerEvents: isForYouOpen ? "auto" : "none",
           }}
         >
           {/* Backdrop */}
@@ -215,7 +297,8 @@ const Navbar = () => {
               left: 0,
               width: "100%",
               height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              backgroundColor: isForYouOpen ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0)",
+              transition: `background-color ${ANIMATION_MS}ms ease`,
               cursor: "pointer"
             }}
             onClick={toggleForYou}
@@ -237,7 +320,9 @@ const Navbar = () => {
               zIndex: 1001,
               display: "flex",
               flexDirection: "column",
-              gap: "2rem"
+              gap: "2rem",
+              transform: isForYouOpen ? "translateY(0px)" : "translateY(-8px)",
+              transition: `transform ${ANIMATION_MS}ms ease` ,
             }}
           >
             {/* Header */}
@@ -257,133 +342,95 @@ const Navbar = () => {
               </button>
             </div>
 
-            {/* Services Content */}
-            <div style={{ display: "flex", gap: "2rem", flex: 1 }}>
-              {/* Left Section - Services */}
-              <div style={{ flex: "1", display: "flex", flexDirection: "column", gap: "1rem" }}>
-                <div>
-                  <h2 style={{ fontSize: "2rem", fontWeight: 700, color: "#000000", marginBottom: "0.5rem" }}>Services</h2>
-                  <p style={{ color: "#000000", fontSize: "1rem", marginBottom: "1.5rem" }}>Get access to therapy, medication management, and personalized treatment</p>
-                </div>
-                <div style={{ 
-                  width: "120px", 
-                  height: "120px", 
-                  borderRadius: "50%", 
-                  backgroundColor: "#dbeafe", 
-                  display: "flex", 
-                  alignItems: "center", 
-                  justifyContent: "center",
-                  marginTop: "1rem"
-                }}>
-                  <div style={{ fontSize: "3rem", color: "#3b82f6" }}>👩‍⚕️</div>
-                </div>
-              </div>
-
-              {/* Middle Section - Therapy & Medications */}
-              <div style={{ flex: "1", display: "flex", flexDirection: "row", gap: "2rem" }}>
-                {/* Therapy Column */}
-                <div style={{ flex: "1" }}>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 600, color: "#000000", marginBottom: "1rem" }}>Therapy</h3>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                    {[
-                      "Individual therapy",
-                      "Couples therapy", 
-                      "LGBTQIA+ therapy",
-                      "Therapy for military",
-                      "Therapy for veterans",
-                      "Therapy for seniors",
-                      "Unlimited messaging therapy",
-                      "Teen therapy",
-                      "NYC Teenspace",
-                      "Therapists near me",
-                      "AI-supported therapy"
-                    ].map((item, index) => (
-                      <li 
-                        key={index} 
-                        style={{ 
-                          color: "#000000", 
-                          fontSize: "0.9rem", 
-                          marginBottom: "0.5rem",
-                          cursor: "pointer",
-                          transition: "color 0.3s ease"
-                        }}
-                        onMouseEnter={(e) => e.target.style.color = "#ffffff"}
-                        onMouseLeave={(e) => e.target.style.color = "#000000"}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Medications Column */}
-                <div style={{ flex: "1" }}>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 600, color: "#000000", marginBottom: "0.5rem" }}>Medications</h3>
-                  <p style={{ color: "#000000", fontSize: "0.9rem", marginBottom: "0.5rem" }}>Psychiatry and medication management</p>
-                  <p style={{ color: "#000000", fontSize: "0.9rem", marginBottom: "1rem" }}>Common medications prescribed</p>
-                  <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                    {[
-                      "Abilify (Aripiprazole)",
-                      "Buspar (Buspirone)",
-                      "Cymbalta (Duloxetine)",
-                      "Lexapro (Escitalopram)",
-                      "Lithium",
-                      "Propranolol",
-                      "Prozac (Fluoxetine)",
-                      "Trazodone",
-                      "Zoloft (Sertraline)"
-                    ].map((item, index) => (
-                      <li 
-                        key={index} 
-                        style={{ 
-                          color: "#000000", 
-                          fontSize: "0.9rem", 
-                          marginBottom: "0.5rem",
-                          cursor: "pointer",
-                          transition: "color 0.3s ease"
-                        }}
-                        onMouseEnter={(e) => e.target.style.color = "#ffffff"}
-                        onMouseLeave={(e) => e.target.style.color = "#000000"}
-                      >
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Right Section - Get treatment for */}
-              <div style={{ flex: "1" }}>
-                <h3 style={{ fontSize: "1.2rem", fontWeight: 600, color: "#000000", marginBottom: "1rem" }}>Get treatment for:</h3>
-                <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                  {[
-                    "Anxiety",
-                    "Social anxiety",
-                    "Depression",
-                    "ADHD",
-                    "Bipolar disorder",
-                    "OCD",
-                    "Insomnia",
-                    "PTSD",
-                    "Post-partum depression",
-                    "Panic disorder"
-                  ].map((item, index) => (
-                    <li 
-                      key={index} 
-                      style={{ 
-                        color: "#000000", 
-                        fontSize: "0.9rem", 
-                        marginBottom: "0.5rem",
-                        cursor: "pointer",
-                        transition: "color 0.3s ease"
+            {/* Mega menu content in a single-row flex that never wraps */}
+            <div
+              style={{
+                display: "flex",
+                gap: "2rem",
+                flex: 1,
+                flexWrap: "nowrap",
+                overflowX: "auto",
+                paddingBottom: "0.5rem",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  gap: "2rem",
+                  flexWrap: "nowrap",
+                  flex: "0 0 auto",
+                }}
+              >
+                {NAV_MEGA.map((group) => (
+                  <div key={group.title} style={{ minWidth: 220, flex: "0 0 auto" }}>
+                    <h3
+                      style={{
+                        fontSize: "1.1rem",
+                        fontWeight: 700,
+                        color: "#111827",
+                        marginBottom: "0.75rem",
                       }}
-                      onMouseEnter={(e) => e.target.style.color = "#ffffff"}
-                      onMouseLeave={(e) => e.target.style.color = "#000000"}
                     >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                      {group.title}
+                    </h3>
+                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                      {group.items.map((item) => {
+                        const label = typeof item === 'string' ? item : item.label;
+                        const href = typeof item === 'string' ? undefined : item.href;
+                        return (
+                          <li
+                            key={label}
+                            style={{
+                              color: "#111827",
+                              fontSize: "0.95rem",
+                              marginBottom: "0.5rem",
+                              cursor: "pointer",
+                            }}
+                          >
+                            {href ? (
+                              <Link
+                                href={href}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  startLoading();
+                                  toggleForYou();
+                                  router.push(href);
+                                }}
+                                style={{ color: "inherit", textDecoration: "none" }}
+                              >
+                                {label}
+                              </Link>
+                            ) : (
+                              <span>{label}</span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+
+              {/* Right-side image */}
+              <div
+                style={{
+                  width: 280,
+                  height: 220,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  position: "relative",
+                  flexShrink: 0,
+                  flex: "0 0 auto",
+                }}
+              >
+                <Image
+                  src="/hill.jpg"
+                  alt="Therapy illustration"
+                  fill
+                  style={{ objectFit: "cover" }}
+                  sizes="280px"
+                  priority
+                />
               </div>
             </div>
           </div>

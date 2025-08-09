@@ -27,7 +27,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       // Fade out animation
       gsap.to('.loading-screen', {
         opacity: 0,
-        duration: 1.2,
+        duration: 0.5,
         ease: "power2.inOut",
         onComplete: () => {
           if (onLoadingComplete) {
@@ -37,7 +37,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       });
 
       clearInterval(colorChangeInterval);
-    }, 3000); // 3 seconds loading time
+    }, 1500); // reduced from 3000ms to 1500ms
 
     return () => {
       clearInterval(colorChangeInterval);

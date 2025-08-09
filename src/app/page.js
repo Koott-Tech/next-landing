@@ -10,7 +10,6 @@ import PickYourGuide from '../components/PickYourGuide';
 import HowItWorks from '../components/HowItWorks';
 import ClientReview from '../components/ClientReview';
 import FormalFAQ from '../components/FormalFAQ';
-import Footer from '../components/Footer';
 
 export default function Home() {
   return (
@@ -38,7 +37,7 @@ export default function Home() {
         />
       </div>
       
-      <Footer />
+      {/* Footer is now rendered globally in RootLayout */}
     </>
   );
 }

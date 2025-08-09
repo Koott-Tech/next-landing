@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import Footer from '@/components/Footer';
 
 // Doctors data - moved outside component to prevent recreation on every render
 const DOCTORS = [
@@ -545,7 +544,6 @@ const TherapistProfileContent = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
     
   );
